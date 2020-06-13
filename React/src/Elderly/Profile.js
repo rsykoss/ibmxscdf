@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import './profile.css'
-import App from '../index'
+import CCTV from '../cctv'
 import face from './img/face_1.jpg'
 
 //const API_register = 'http://localhost:3001/iot/registerDevice'
@@ -42,7 +42,7 @@ class Profile extends Component {
     
     launchDevice = ( {deviceType} ) => {
         if (deviceType === "CCTV") {
-            return <App />
+            return <CCTV />
         }
         else {
             return <Profile />

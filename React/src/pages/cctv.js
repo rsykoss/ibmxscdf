@@ -10,6 +10,7 @@ var accident
 var frame = {majorFire: [], minorFire: [], majorFall: [], minorFall: []}
 const t = 1000 // time in milisecond to confirm detection
 const numDetected = 5 // num of accident detected in t
+
 const handlePrediction = (predictions) => {
   for(var key in frame) {
     if(Date.now() - frame[key][0] >= t){
@@ -32,16 +33,16 @@ const handlePrediction = (predictions) => {
   predictions.forEach((prediction) => {
     console.log(prediction.label)
     if (prediction.label === "Major kitchen fire"){
-      accident = "Major Fire Accident"
+      accident = "fire"
       frame.majorFire.push(Date.now())
     }else if (prediction.label === "Minor kitchen fire"){
-      accident = "Minor Fire Accident"
+      accident = "fire"
       frame.minorFire.push(Date.now())
     }else if (prediction.label === "Major Fall"){
-      accident = "Major Fall Accident"
+      accident = "accident"
       frame.majorFall.push(Date.now())
     }else if (prediction.label === "Minor Fall"){
-      accident = "Minor Fall Accident"
+      accident = "accident"
       frame.minorFall.push(Date.now())
     }
   })  
@@ -77,7 +78,10 @@ function dataURItoBlob(dataURI) {
 
 function sendReq(image, severity) {
   var bodyFormData = new FormData();
-  bodyFormData.set('deviceKey', '1234');
+  let search = window.location.search;
+  var deviceKey = search.split('=')[1]
+  console.log(deviceKey)
+  bodyFormData.set('deviceKey', deviceKey);
   bodyFormData.append('image', image);
   bodyFormData.set('severity', severity);
   bodyFormData.set('eventType', accident);
@@ -121,7 +125,6 @@ const CCTV = () => {
       <ObjectDetectionVideo
         model={model}
         onPrediction={handlePrediction}
-        render={render}
         // aspectFill: The option to scale the video to fill the size of the view.
         //             Some portion of the video may be clipped to fill the view's
         //             bounds.

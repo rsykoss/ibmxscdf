@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import './register.css'
+import { Link } from 'react-router-dom';
+// import Profile from './Profile'
 
 const API_register = 'http://localhost:3001/iot/registerDevice'
 const API_fetch = 'http://localhost:3001/iot/fetchAllDevices'
@@ -73,7 +75,7 @@ class Register extends Component {
                 <div class="card-body">
                     <h5 class="card-title">{d.deviceKey}</h5>
                     {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                    <a href="/cctv" class="btn btn-primary">{d.type}</a>
+                    <button class="btn btn-primary" onClick={() => gotoCCTV(d.deviceKey)}>{d.type}</button>
                 </div>
             </div>
             return <div> {d.imageURL} | {d.deviceKey}</div>
@@ -116,5 +118,7 @@ class Register extends Component {
     }
 
 }
-
+function gotoCCTV(key) {
+    window.location.href = "http://localhost:3000/cctv?productKey="+key;
+}
 export default Register;

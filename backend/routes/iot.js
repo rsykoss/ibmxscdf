@@ -92,5 +92,4 @@ router.post('/registerDevice', async function (req, res) {
     })
 });
 
-
 module.exports = router;

@@ -7,7 +7,7 @@ var methodOverride = require("method-override")
 
 const User = require('./models/user.js');
 
-const { mongoose } = require('./config/mongoose')
+const { mongoose, bot } = require('./config/mongoose')
 
 
 app.use(bodyParser.json());
@@ -25,10 +25,6 @@ app.use(require("express-session")({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-const TelegramBot = require('node-telegram-bot-api');
-const token = '1238052481:AAF61uEvpaNyhKlFFg4TvOo3NSBM20BB1vI';
-const bot = new TelegramBot(token, { polling: true });
 
 // TELEGRAM BOT
 
@@ -51,12 +47,8 @@ bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   console.log(msg)
   console.log('ping ' + chatId)
-  let user
+  let user = await User.findOne({ telegramId: String(chatId) }).exec();
 
-  try {
-    user = await User.findOne({ telegramId: String(chatId) }).exec();
-  } catch (error) {
-  }
   console.log(user)
   if (user) {
     console.log('user found')
@@ -66,7 +58,7 @@ bot.on('message', async (msg) => {
           user.locations.push({ latitude: msg.location.latitude, longitude: msg.location.longitude });
           await user.save();
           bot.sendMessage(chatId, 'Location saved. Add more locations, or send /done to move on with life.');
-        } 
+        }
         break;
       case 'Responding':
         bot.sendMessage(chatId, 'Very good.');
@@ -87,8 +79,9 @@ bot.on('message', async (msg) => {
       console.log('placeholder user found')
       placeholderUser.telegramId = chatId;
       placeholderUser.telegramState = 'Add Locations';
+      if (msg.chat.username) placeholderUser.name = msg.chat.username;
       await placeholderUser.save();
-      await bot.sendMessage(chatId, 'Account has been tagged to ' + placeholderUser.nric);
+      await bot.sendMessage(chatId, 'Hello, ' + msg.chat.username + '. Your account has been tagged to NRIC ' + placeholderUser.nric);
       bot.sendMessage(chatId, 'Send a location where you would like to receive help requests for.');
     } else {
       console.log('placeholder user not found')
@@ -98,7 +91,16 @@ bot.on('message', async (msg) => {
 
 });
 
-
+bot.onText(/\/locations/, async (msg) => {
+  const chatId = msg.chat.id;
+  let user = await User.findOne({ telegramId: String(chatId) }).exec();
+  console.log('pint')
+  if (user) {
+    user.telegramState = 'Add Locations';
+    user.save();
+    bot.sendMessage(chatId, 'Send a location where you would like to receive help requests for.');
+  }
+});
 
 bot.onText(/\/done/, async (msg) => {
   const chatId = msg.chat.id;
@@ -109,9 +111,9 @@ bot.onText(/\/done/, async (msg) => {
       case 'Add Locations':
         user.telegramState = 'Neutral';
         user.save();
-        bot.sendMessage(chatId, 'You are now volunteering for the following locations.');
+        await bot.sendMessage(chatId, 'You are now volunteering for the following locations.');
         user.locations.forEach(l => {
-          bot.sendLocation(latitude, longitude);
+          bot.sendLocation(chatId, l.latitude, l.longitude);
         })
         break;
       case 'Responding':

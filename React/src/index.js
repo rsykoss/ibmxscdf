@@ -78,7 +78,7 @@ function dataURItoBlob(dataURI) {
 
 function sendReq(image, severity) {
   var bodyFormData = new FormData();
-  bodyFormData.set('deviceKey', 'blah');
+  bodyFormData.set('deviceKey', '1234');
   bodyFormData.append('image', image);
   bodyFormData.set('severity', severity);
   bodyFormData.set('eventType', accident);

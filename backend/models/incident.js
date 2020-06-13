@@ -19,12 +19,18 @@ var incidentSchema = new mongoose.Schema({
     },
     severity: {
         type: String,
-        enum: ['Minor', 'Major', 'Severe']
+        enum: ['Minor', 'Major']
     },
     eventDescription: String,
     location: {
-        longitude: Number,
-        latitude: Number
+        longitude: {
+            default: 103.8025,
+            type: Number
+        },
+        latitude: {
+            default: 1.4384,
+            type: Number
+        },
     },
     imageURL: String,
     respondents: [{

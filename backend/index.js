@@ -6,6 +6,7 @@ var passport = require("passport");
 var methodOverride = require("method-override")
 
 const User = require('./models/user.js');
+const Incident = require('./models/incident.js');
 
 const { mongoose, bot } = require('./config/mongoose')
 
@@ -28,28 +29,12 @@ app.use(passport.session());
 
 // TELEGRAM BOT
 
-// Matches "/echo [whatever]"
-bot.onText(/\/echo (.+)/, (msg, match) => {
-  // 'msg' is the received Message from Telegram
-  // 'match' is the result of executing the regexp above on the text content
-  // of the message
-
-  const chatId = msg.chat.id;
-  const resp = match[1]; // the captured "whatever"
-
-  // send back the matched "whatever" to the chat
-  bot.sendMessage(chatId, resp);
-});
-
 // Listen for any kind of message. There are different kinds of
 // messages.
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
-  console.log(msg)
   console.log('ping ' + chatId)
   let user = await User.findOne({ telegramId: String(chatId) }).exec();
-
-  console.log(user)
   if (user) {
     console.log('user found')
     switch (user.telegramState) {
@@ -61,15 +46,15 @@ bot.on('message', async (msg) => {
         }
         break;
       case 'Responding':
-        bot.sendMessage(chatId, 'Very good.');
+        // bot.sendMessage(chatId, 'Very good.');
         break;
       case 'Neutral':
-        bot.sendMessage(chatId, 'Okay.');
+        // bot.sendMessage(chatId, 'Okay.');
         break;
       default:
-        user.telegramState = 'Add Locations';
-        await user.save();
-        bot.sendMessage(chatId, 'Received your message');
+      // user.telegramState = 'Add Locations';
+      // await user.save();
+      // bot.sendMessage(chatId, 'Received your message');
     }
   } else {
     console.log('user not found')
@@ -90,6 +75,42 @@ bot.on('message', async (msg) => {
   }
 
 });
+
+// Matches "/echo [whatever]"
+bot.onText(/\/help (.+)/, async (msg, match) => {
+  // 'msg' is the received Message from Telegram
+  // 'match' is the result of executing the regexp above on the text content
+  // of the message
+  console.log('hello')
+
+  const chatId = msg.chat.id;
+  const resp = match[1]; // the captured "whatever"
+  console.log(resp)
+  bot.sendLocation(chatId, 1.4384, 103.8025);
+
+  let incident = await Incident.findById(resp);
+  if (!incident) {
+    bot.sendLocation(chatId, 1.4384, 103.8025);
+    // bot.sendMessage(chatId, 'No incident found.');
+  } else {
+    let user = await User.findOne({ telegramId: String(chatId) }).exec();
+    user.telegramState = 'Responding';
+    user.incident = incident
+    user.save();
+    incident.respondents.
+    Incident.findOneAndUpdate(
+      { _id: incident._id },
+      { $addToSet: { respondents: user._id } },
+      {
+          returnNewDocument: true
+      }, function (error, profile) {
+          res.json({ msg: 'Success' })
+      });
+    bot.sendMessage(chatId, 'Go help granny!');
+  }
+  // send back the matched "whatever" to the chat
+});
+
 
 bot.onText(/\/locations/, async (msg) => {
   const chatId = msg.chat.id;
@@ -138,5 +159,5 @@ var iotRoutes = require("./routes/iot");
 app.use('/iot', iotRoutes);
 
 app.listen(process.env.PORT || 3001, function () {
-  console.log("Hello");
+  console.log("Hello World");
 });

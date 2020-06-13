@@ -11,6 +11,16 @@ import Routes from './routes/routes';
 // import CCTV from './cctv';
 
 ReactDOM.render(
+<<<<<<< HEAD
+
+  <div className="App">
+    {/* <Navigation /> */}
+    <Routes />
+  </div>
+  ,
+  document.getElementById('root')
+);
+=======
     <Router>
         <div className="App">
             <Navbar bg="dark" variant="dark" className="bar" sticky="top">
@@ -27,3 +37,4 @@ ReactDOM.render(
     </Router>,
     document.getElementById('root')
 );
+>>>>>>> e7ceb64d1de7b02dd9dcd191fb65312fd347975f

@@ -119,7 +119,6 @@ const render = (ctx, predictions) => {
 
 const CCTV = () => {
   const model = useModel(process.env.PUBLIC_URL + '/model_web')
-
   return (
     <div className="fillPage">
       <ObjectDetectionVideo

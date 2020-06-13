@@ -22,7 +22,11 @@ var userSchema = new mongoose.Schema({
     telegramState: {
         type: String,
         enum: ['Neutral', 'Responding', 'Add Locations', 'Remove Locations']
-    }
+    },
+    incident: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Incident"
+    },
 });
 
 module.exports = mongoose.model("User", userSchema);

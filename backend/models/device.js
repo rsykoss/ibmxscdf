@@ -5,7 +5,10 @@ var deviceSchema = new mongoose.Schema({
         type: String,
         enum: ['cctv', 'walkingStick']
     },
-    eventType: String
+    product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+    },
 });
 
 module.exports = mongoose.model("Device", deviceSchema);

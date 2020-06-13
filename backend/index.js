@@ -7,6 +7,9 @@ var methodOverride = require("method-override")
 
 const User = require('./models/user.js');
 
+const { mongoose } = require('./config/mongoose')
+
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
@@ -47,13 +50,80 @@ bot.onText(/\/echo (.+)/, (msg, match) => {
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   console.log(msg)
+  console.log('ping ' + chatId)
+  let user
 
-  let user = await User.findOne({ telegramId: msg.chat.id });
-  if (!user) {
-    let placeholderUser = await User.findOne({ telegramId: msg.chat.id });
+  try {
+    user = await User.findOne({ telegramId: String(chatId) }).exec();
+  } catch (error) {
   }
-  // send a message to the chat acknowledging receipt of their message
-  bot.sendMessage(chatId, 'Received your message');
+  console.log(user)
+  if (user) {
+    console.log('user found')
+    switch (user.telegramState) {
+      case 'Add Locations':
+        if (msg.location) {
+          user.locations.push({ latitude: msg.location.latitude, longitude: msg.location.longitude });
+          await user.save();
+          bot.sendMessage(chatId, 'Location saved. Add more locations, or send /done to move on with life.');
+        } 
+        break;
+      case 'Responding':
+        bot.sendMessage(chatId, 'Very good.');
+        break;
+      case 'Neutral':
+        bot.sendMessage(chatId, 'Okay.');
+        break;
+      default:
+        user.telegramState = 'Add Locations';
+        await user.save();
+        bot.sendMessage(chatId, 'Received your message');
+    }
+  } else {
+    console.log('user not found')
+    // send a message to the chat acknowledging receipt of their message
+    let placeholderUser = await User.findOne({ accountKey: msg.text });
+    if (placeholderUser) {
+      console.log('placeholder user found')
+      placeholderUser.telegramId = chatId;
+      placeholderUser.telegramState = 'Add Locations';
+      await placeholderUser.save();
+      await bot.sendMessage(chatId, 'Account has been tagged to ' + placeholderUser.nric);
+      bot.sendMessage(chatId, 'Send a location where you would like to receive help requests for.');
+    } else {
+      console.log('placeholder user not found')
+      bot.sendMessage(chatId, 'Invalid account key');
+    }
+  }
+
+});
+
+
+
+bot.onText(/\/done/, async (msg) => {
+  const chatId = msg.chat.id;
+  let user = await User.findOne({ telegramId: String(chatId) }).exec();
+
+  if (user) {
+    switch (user.telegramState) {
+      case 'Add Locations':
+        user.telegramState = 'Neutral';
+        user.save();
+        bot.sendMessage(chatId, 'You are now volunteering for the following locations.');
+        user.locations.forEach(l => {
+          bot.sendLocation(latitude, longitude);
+        })
+        break;
+      case 'Responding':
+        bot.sendMessage(chatId, 'Very good.');
+        break;
+      case 'Neutral':
+        bot.sendMessage(chatId, 'Okay.');
+        break;
+      default:
+        bot.sendMessage(chatId, 'Received your message');
+    }
+  }
 });
 
 bot.onText(/\/start/, (msg) => {

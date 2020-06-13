@@ -10,6 +10,7 @@ var accident
 var frame = {majorFire: [], minorFire: [], majorFall: [], minorFall: []}
 const t = 1000 // time in milisecond to confirm detection
 const numDetected = 5 // num of accident detected in t
+
 const handlePrediction = (predictions) => {
   for(var key in frame) {
     if(Date.now() - frame[key][0] >= t){
@@ -77,7 +78,8 @@ function dataURItoBlob(dataURI) {
 
 function sendReq(image, severity) {
   var bodyFormData = new FormData();
-  bodyFormData.set('deviceKey', '1234');
+  const {device} = props.location.state
+  bodyFormData.set('deviceKey', this);
   bodyFormData.append('image', image);
   bodyFormData.set('severity', severity);
   bodyFormData.set('eventType', accident);
@@ -121,7 +123,6 @@ const CCTV = () => {
       <ObjectDetectionVideo
         model={model}
         onPrediction={handlePrediction}
-        render={render}
         // aspectFill: The option to scale the video to fill the size of the view.
         //             Some portion of the video may be clipped to fill the view's
         //             bounds.

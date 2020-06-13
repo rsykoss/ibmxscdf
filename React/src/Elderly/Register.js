@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 // import Profile from './Profile'
 
 const API_register = 'http://localhost:3001/iot/registerDevice'
@@ -101,7 +102,7 @@ class Register extends Component {
                 <div class="card-body">
                     <h5 class="card-title">{d.deviceKey}</h5>
                     {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                    <a href="/cctv" class="btn btn-primary">{d.type}</a>
+                    <Link to={{pathname: "/cctv", state: {device:d.deviceKey}}} class="btn btn-primary">{d.type}</Link>
                 </div>
             </div>
             return <div> {d.imageURL} | {d.deviceKey}</div>

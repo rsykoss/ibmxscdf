@@ -1,17 +1,58 @@
 var express = require("express");
+var fs = require("fs")
 var router = express.Router();
 const User = require('../models/user.js');
+const Incident = require('../models/incident.js');
+const Device = require('../models/device.js');
+var multer = require('multer');
 
-router.post('/report', async function (req, res) {
+multer({limits: { fieldSize: 25 * 1024 * 1024 }})
+const { bot } = require('../config/mongoose')
+
+const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) => {
+    let key = deviceKey ? deviceKey : '5ee4bad674ca5538cfb3b4a7';
+    let device = await Device.findById(key)
+    let newIncident = new Incident();
+    newIncident.device = device;
+    newIncident.severity = 'Severe';
+    newIncident.eventDescription = 'An old woman shat herself.';
+    // newIncident.location = { longitude: device.location.longitude, latitude: device.location.latitude };
+    newIncident.imageURL = imageURL ? imageURL : device.imageURL
+    newIncident.eventType = eventType ? eventType : device.eventType
+    newIncident.save();
+    bot.sendMessage('42402078', newIncident.eventDescription, {
+        "reply_markup": {
+            "keyboard": [["I'm on it."], ["I don't care."]]
+        }
+    });
+}
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './public/storage');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname+".png");
+    }
+  });
+
+const uploads = multer({
+    storage: storage 
+}).single('image');
+
+router.get('/report', async (req, res) => {
+    generateIncident({})
+    res.json({success: true})
+})
+
+router.post('/report', uploads, async function (req, res) {
     const { deviceKey,
-        imageURL,
         severity,
         eventType
     } = req.body;
-
-    console.log({
+    const image = req.file
+    generateIncident({
         deviceKey,
-        imageURL,
+        image,
         severity,
         eventType
     })

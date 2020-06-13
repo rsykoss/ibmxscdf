@@ -12,7 +12,6 @@ const ObjectDetectionVideo = React.memo(
     useWebcam(videoRef, () => {
       detectFrame()
     })
-
     const detectFrame = useCallback(async () => {
       const predictions = await model.detect(videoRef.current)
       if (onPrediction) {
@@ -42,7 +41,6 @@ const ObjectDetectionVideo = React.memo(
       ctx.setWidth(wantedWidth)
       ctx.setHeight(wantedHeight)
       ctx.clearAll()
-
       // Update predictions to match canvas.
       const offsetPredictions = predictions.map((prediction) => {
         let x = prediction.bbox[0] * scale + xOffset

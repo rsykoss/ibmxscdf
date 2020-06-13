@@ -7,14 +7,29 @@ import ObjectDetectionVideo from './object-detection-video/ObjectDetectionVideo'
 import './index.css'
 
 var accident
+var incident = false
 var frame = []
-const t = 5000 // time in milisecond to confirm detection
-const numDetected = 25 // num of accident detected in t
+const t = 1000 // time in milisecond to confirm detection
+const numDetected = 5 // num of accident detected in t
 const handlePrediction = (predictions) => {
   if(Date.now() - frame[0] >= t){
     if (frame.length > numDetected) {
       console.log(frame.length)
       console.log(accident)
+      incident = true
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          deviceKey: "blah",
+          imageURL: "HALLO",
+          severity: 0, // 1 or 2
+          eventType: accident
+        })
+      };
+      fetch('http://localhost:3001/iot/report', requestOptions)
+      //     .then(response => response.json())
+      //     .then(data => this.setState({ postId: data.id }));
       alert(accident)
       frame = []
     } else frame = [] // re initialise frame
@@ -57,6 +72,7 @@ const App = () => {
       <ObjectDetectionVideo
         model={model}
         onPrediction={handlePrediction}
+        incident={incident}
         // render={render}
         // aspectFill: The option to scale the video to fill the size of the view.
         //             Some portion of the video may be clipped to fill the view's

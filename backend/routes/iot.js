@@ -11,9 +11,9 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) =>
     let device = await Device.findById(key)
     let newIncident = new Incident();
     newIncident.device = device;
-    newIncident.severity = severity ? severity : device.severity
+    newIncident.severity = 'Severe';
     newIncident.eventDescription = 'An old woman shat herself.';
-    newIncident.location = { longitude: device.longitude, latitude: device.latitude };
+    // newIncident.location = { longitude: device.location.longitude, latitude: device.location.latitude };
     newIncident.imageURL = imageURL ? imageURL : device.imageURL
     newIncident.eventType = eventType ? eventType : device.eventType
     newIncident.save();

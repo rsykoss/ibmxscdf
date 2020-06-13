@@ -19,7 +19,7 @@ router.post('/report', async function (req, res) {
     res.json({ success: true })
 });
 
-router.post('/fetchAllDevices', async function (req, res) {
+router.get('/fetchAllDevices', async function (req, res) {
     // const { deviceType } = req.body;
 
     let devices = await Device.find({})

@@ -9,6 +9,8 @@ import './index.css';
 // import Navigation from './components/Navbar';
 import Routes from './routes/routes';
 
+// import CCTV from './cctv';
+
 ReactDOM.render(
     <Router>
         <div className="App">

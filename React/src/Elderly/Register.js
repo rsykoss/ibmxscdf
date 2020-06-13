@@ -29,7 +29,9 @@ class Register extends Component {
           Because we named the inputs to match their
           corresponding values in state, it's
           super easy to update the state
-        */
+        */  
+
+        console.log({ [e.target.name]: e.target.value })
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -60,7 +62,7 @@ class Register extends Component {
             this.setState({
                 name: result.data.name,
                 address: result.data.address,
-                devices: result.data.devices
+                devices: result.data.devices.length > 0 ? result.data.devices : []
             })
 
         });
@@ -81,20 +83,23 @@ class Register extends Component {
 
 
         // const { name, addresss, deviceType } = this.state;
-        axios.post(API_register, { deviceType: "cctv" })
+        axios.post(API_register, { deviceType: this.state.deviceType })
             .then((response) => {
+                console.log('teste');
                 console.log(response)
                 //     this.setState({
                 //         devices: [...this.state.deviceType, result.data.devices]
                 // });
-                this.setState({ devices: response.data.devices })
+                console.log(response.data.newDevice)
+                this.setState({ devices: [...this.state.devices, response.data.newDevice] })
             });
         //display Profile page
-        return <></>
+      
         // return <Profile />
     }
 
     renderMyDevices() {
+        if (!this.state.devices) return <div />
         return this.state.devices.map(d => {
             let imageURL = d.type == 'cctv' ? 'https://images.unsplash.com/photo-1565591452825-67d6b7df1d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' : 'https://images.unsplash.com/photo-1586001348188-05bd8063cb7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
             return <div class="card" style={{ width: '18rem' }}>
@@ -128,9 +133,9 @@ class Register extends Component {
                             <label>
                                 Device Type:
                                 </label>
-                            <select defaultValue={this.state.deviceType} onChange={this.onChange}>
-                                <option value="CCTV">CCTV</option>
-                                <option value="Sensor">Sensor</option>
+                            <select name='deviceType' defaultValue={this.state.deviceType} onChange={this.onChange}>
+                                <option value="cctv">CCTV</option>
+                                <option value="sensor">Sensor</option>
                             </select>
 
                             <br />

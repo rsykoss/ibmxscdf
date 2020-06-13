@@ -69,6 +69,7 @@ router.post('/report', parser.any(), async function (req, res) {
         severity,
         eventType
     } = req.body;
+    console.log('test image');
     const image = req.files.length > 0 ? req.files[0].secure_url : 'no image found';
     console.log(image);
     generateIncident({
@@ -102,6 +103,7 @@ router.get('/fetchAllDevices', async function (req, res) {
 
 router.post('/registerDevice', async function (req, res) {
     const { deviceType } = req.body;
+    console.log(deviceType);
     let device = new Device();
     device.deviceType = deviceType;
     device.save();

@@ -9,8 +9,8 @@ import './index.css'
 var accident
 var frame = []
 const handlePrediction = (predictions) => {
-  if(Date.now() - frame[0] >= 1000){
-    if (frame.length > 5) {
+  if(Date.now() - frame[0] >= 5000){
+    if (frame.length > 25) {
       console.log(accident)
       alert(accident)
       frame = []

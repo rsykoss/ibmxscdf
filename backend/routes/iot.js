@@ -36,7 +36,7 @@ router.post('/report', async function (req, res) {
         eventType
     } = req.body;
 
-    console.log({
+    generateIncident({
         deviceKey,
         imageURL,
         severity,

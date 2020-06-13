@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import './profile.css'
 import CCTV from '../cctv'
 import face from './img/face_1.jpg'
 
-//const API_register = 'http://localhost:3001/iot/registerDevice'
-const API_fetch = 'http://localhost:3001/iot/fetchAllDevices'
+//const API_register = 'http://localhost:3001/iot/registerDevice';
+const API_fetch = 'http://localhost:3001/iot/fetchAllDevices';
 
-
-// class Profile extends Component {
+class Profile extends Component {
     
-//      // profile page
-//     // view cctv 
-//     // fetch devices & set state
+    // profile page
+    // view cctv 
+    // fetch devices & set state
 
     constructor() {
         super();
@@ -63,6 +61,6 @@ const API_fetch = 'http://localhost:3001/iot/fetchAllDevices'
         )
     }
    
-// }
+}
 
-// export default Profile;
+export default Profile;

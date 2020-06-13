@@ -69,28 +69,14 @@ class Register extends Component {
     registerDevice = (e) => {
         e.preventDefault();
 
-        // fetch('http://localhost:3001/iot/registerDevice', {
-        // method: 'post',
-        // headers: { 
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json' 
-        // },
-        // body: JSON.stringify({deviceType:"CCTV"})
-        // }).then((response) => console.log(response));
-
-
-        // const { name, addresss, deviceType } = this.state;
         axios.post(API_register, { deviceType: "cctv" })
             .then((response) => {
                 console.log(response)
-                //     this.setState({
-                //         devices: [...this.state.deviceType, result.data.devices]
-                // });
                 this.setState({ devices: response.data.devices })
             });
-        //display Profile page
+
         return <></>
-        // return <Profile />
+
     }
 
     renderMyDevices() {
@@ -125,8 +111,7 @@ class Register extends Component {
 
                             <br />
                             <label>
-                                Device Type:
-                                </label>
+                                Device Type: </label>
                             <select defaultValue={this.state.deviceType} onChange={this.onChange}>
                                 <option value="CCTV">CCTV</option>
                                 <option value="Sensor">Sensor</option>
@@ -136,7 +121,7 @@ class Register extends Component {
                             <button className="btn btn-lg btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
-                    <div className="col">
+                    <div className="container">
                         {this.renderMyDevices()}
                     </div>
                 </div>

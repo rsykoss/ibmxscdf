@@ -5,7 +5,7 @@ import Profile from './Elderly/Profile'
 function Home() {
     return (
         <div className="App">
-            <Profile />
+            <Register />
         </div>
     )
 }

@@ -78,7 +78,7 @@ function dataURItoBlob(dataURI) {
 
 function sendReq(image, severity) {
   var bodyFormData = new FormData();
-  const {device} = props.location.state
+  // const {device} = props.location.state
   bodyFormData.set('deviceKey', this);
   bodyFormData.append('image', image);
   bodyFormData.set('severity', severity);
@@ -117,7 +117,6 @@ const render = (ctx, predictions) => {
 
 const CCTV = () => {
   const model = useModel(process.env.PUBLIC_URL + '/model_web')
-
   return (
     <div className="fillPage">
       <ObjectDetectionVideo

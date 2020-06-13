@@ -12,11 +12,11 @@ import Routes from './routes/routes';
 // import CCTV from './cctv';
 
 ReactDOM.render(
-    <Router>
-        <div className="App">
-            {/* <Navigation /> */}
-            <Routes />
-        </div>
-    </Router>,
-    document.getElementById('root')
+
+  <div className="App">
+    {/* <Navigation /> */}
+    <Routes />
+  </div>
+  ,
+  document.getElementById('root')
 );

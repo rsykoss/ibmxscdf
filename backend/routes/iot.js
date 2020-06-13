@@ -4,6 +4,8 @@ var router = express.Router();
 const User = require('../models/user.js');
 const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
+const Product = require('../models/product.js');
+
 var multer = require('multer');
 
 const cloudinary = require("cloudinary");
@@ -36,7 +38,7 @@ const parser = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 
 
 const { bot } = require('../config/mongoose')
 
-const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) => {
+const generateIncident = async ({ deviceKey, imageURL, severity, eventType, eventDescription }) => {
     let key = deviceKey ? deviceKey : '5ee4bad674ca5538cfb3b4a7';
     let device = await Device.findById(key)
     let newIncident = new Incident();
@@ -67,13 +69,15 @@ router.get('/report', async (req, res) => {
 router.post('/report', parser.any(), async function (req, res) {
     const { deviceKey,
         severity,
-        eventType
+        eventType,
+        eventDescription
     } = req.body;
     console.log('test image');
     const image = req.files.length > 0 ? req.files[0].secure_url : 'no image found';
     console.log(image);
     generateIncident({
         deviceKey,
+        eventDescription,
         imageURL: image,
         severity,
         eventType
@@ -101,6 +105,17 @@ router.get('/fetchAllDevices', async function (req, res) {
     });
 })
 
+router.get('/fetchAllProducts', async function (req, res) {
+    // const { deviceType } = req.body;
+
+    let products = await Product.find({}).lean()
+    res.json({
+        success: true,
+        products
+    });
+})
+
+
 router.post('/registerDevice', async function (req, res) {
     const { deviceType } = req.body;
     console.log(deviceType);
@@ -112,6 +127,28 @@ router.post('/registerDevice', async function (req, res) {
             type: device.deviceType,
             deviceKey: device._id
         }
+    })
+});
+
+router.post('/registerProduct', async function (req, res) {
+    // title: String,
+    // description: String,
+    // creatorURL: String,
+    // deviceType: {
+    //     type: String,
+    //     enum: ['cctv', 'walkingStick']
+    // },
+    const { title, description, creatorURL, imageURL, deviceType } = req.body;
+    console.log({ title, description, creatorURL, deviceType });
+    let product = new Product();
+    product.title = title;
+    product.description = description;
+    product.creatorURL = creatorURL;
+    product.imageURL = imageURL;
+    product.deviceType = deviceType;
+    await product.save();
+    res.json({
+        success: true
     })
 });
 

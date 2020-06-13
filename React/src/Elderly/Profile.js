@@ -9,11 +9,11 @@ import face from './img/face_1.jpg'
 const API_fetch = 'http://localhost:3001/iot/fetchAllDevices'
 
 
-class Profile extends Component {
+// class Profile extends Component {
     
-     // profile page
-    // view cctv 
-    // fetch devices & set state
+//      // profile page
+//     // view cctv 
+//     // fetch devices & set state
 
     constructor() {
         super();
@@ -63,6 +63,6 @@ class Profile extends Component {
         )
     }
    
-}
+// }
 
-export default Profile;
+// export default Profile;

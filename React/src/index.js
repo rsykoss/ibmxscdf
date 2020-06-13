@@ -8,13 +8,16 @@ import './index.css'
 
 var accident
 var frame = []
+const t = 5000 // time in milisecond to confirm detection
+const numDetected = 25 // num of accident detected in t
 const handlePrediction = (predictions) => {
-  if(Date.now() - frame[0] >= 5000){
-    if (frame.length > 25) {
+  if(Date.now() - frame[0] >= t){
+    if (frame.length > numDetected) {
+      console.log(frame.length)
       console.log(accident)
       alert(accident)
       frame = []
-    } else frame = []
+    } else frame = [] // re initialise frame
   }
   predictions.forEach((prediction) => {
     if (prediction.label === 'Peaceful situation'){

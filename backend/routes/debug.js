@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const User = require('../models/user.js');
+const Receiver = require('../models/carereceiver.js');
+
 const Device = require('../models/device.js');
 const { bot } = require('../config/mongoose')
 
@@ -20,6 +22,13 @@ router.get('/populateFakeUser', async function (req, res) {
     user.mobile = '90066259';
     await user.save();
     res.json({ user })
+});
+
+router.get('/populateFakeReceiver', async function (req, res) {
+    let receiver = new Receiver();
+    receiver.name = 'Hock Chuan';
+    await receiver.save();
+    res.json({ receiver })
 });
 
 

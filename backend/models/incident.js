@@ -23,8 +23,14 @@ var incidentSchema = new mongoose.Schema({
     },
     eventDescription: String,
     location: {
-        longitude: Number,
-        latitude: Number
+        longitude: {
+            default: 103.8025,
+            type: Number
+        },
+        latitude: {
+            default: 1.4384,
+            type: Number
+        },
     },
     imageURL: String,
     respondents: [{

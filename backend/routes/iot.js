@@ -5,7 +5,7 @@ const User = require('../models/user.js');
 const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
 const Product = require('../models/product.js');
-
+const Receiver = require('../models/carereceiver.js');
 var multer = require('multer');
 
 const cloudinary = require("cloudinary");
@@ -86,20 +86,23 @@ router.post('/report', parser.any(), async function (req, res) {
 });
 
 router.get('/fetchAllDevices', async function (req, res) {
-    // const { deviceType } = req.body;
+    const { id } = req.query;
 
-    let devices = await Device.find({})
-    console.log(devices);
+    let careReceiver = await Receiver.findById(id ? id : '5ee55bf1e51b411a29f81915').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
+
     res.json({
         success: true,
-        name: 'Hock Chuan',
+        name: careReceiver.name,
         age: 88,
         gender: 'Male',
         address: 'Nanyang Technological',
-        devices: devices.map(d => {
+        devices: careReceiver.devices.map(d => {
             return {
                 type: d.deviceType,
-                deviceKey: d._id
+                deviceKey: d._id,
+                title: d.product.title,
+                description: d.product.description,
+                imageURL: d.product.imageURL,
             }
         })
     });
@@ -119,13 +122,22 @@ router.get('/fetchAllProducts', async function (req, res) {
 router.post('/registerDevice', async function (req, res) {
     const { deviceType } = req.body;
     console.log(deviceType);
+    let product = await Product.findOne({ deviceType }).lean()
+    if (!product) {
+        res.json({ success: false })
+        return;
+    }
     let device = new Device();
     device.deviceType = deviceType;
+    device.product = product
     device.save();
     res.json({
         success: true, newDevice: {
             type: device.deviceType,
-            deviceKey: device._id
+            deviceKey: device._id,
+            title: product.title,
+            description: product.description,
+            imageURL: product.imageURL,
         }
     })
 });

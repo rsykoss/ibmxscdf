@@ -103,6 +103,7 @@ router.get('/fetchAllDevices', async function (req, res) {
 
 router.post('/registerDevice', async function (req, res) {
     const { deviceType } = req.body;
+    console.log(deviceType);
     let device = new Device();
     device.deviceType = deviceType;
     device.save();

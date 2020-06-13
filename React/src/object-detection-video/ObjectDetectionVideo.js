@@ -13,6 +13,8 @@ const ObjectDetectionVideo = React.memo(
       detectFrame()
     })
     const detectFrame = useCallback(async () => {
+      if (!model) return
+
       const predictions = await model.detect(videoRef.current)
       if (onPrediction) {
         onPrediction(predictions)

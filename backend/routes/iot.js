@@ -6,7 +6,34 @@ const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
 var multer = require('multer');
 
-multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+
+cloudinary.config({
+    cloud_name: 'rsykoss',
+    api_key: '979912435841532',
+    api_secret: 'lo7EhZCAyKYyJ4z0SJ5FeVg0c5k'
+});
+
+const storage = cloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: "hackathon",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }]
+});
+
+// multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './public/storage');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname + ".png");
+//     }
+// });
+
+const parser = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 } });
+
 const { bot } = require('../config/mongoose')
 
 const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) => {
@@ -26,14 +53,7 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) =>
         }
     });
 }
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './public/storage');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname + ".png");
-    }
-});
+
 
 const uploads = multer({
     storage: storage
@@ -44,12 +64,14 @@ router.get('/report', async (req, res) => {
     res.json({ success: true })
 })
 
-router.post('/report', uploads, async function (req, res) {
+router.post('/report', parser.any(), async function (req, res) {
     const { deviceKey,
         severity,
         eventType
     } = req.body;
-    const image = req.file
+    console.log('test image');
+    const image = req.files.length > 0 ? req.files[0].secure_url : 'no image found';
+    console.log(image);
     generateIncident({
         deviceKey,
         imageURL: image,
@@ -81,6 +103,7 @@ router.get('/fetchAllDevices', async function (req, res) {
 
 router.post('/registerDevice', async function (req, res) {
     const { deviceType } = req.body;
+    console.log(deviceType);
     let device = new Device();
     device.deviceType = deviceType;
     device.save();

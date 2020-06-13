@@ -40,6 +40,12 @@ router.get('/resetUsers', async function (req, res) {
 });
 
 
+router.get('/resetDevices', async function (req, res) {
+    let devices = await Device.deleteMany({})
+    res.json({ devices })
+});
+
+
 router.post('/createUser', async function (req, res) {
     let user = new User();
     user.accountKey = new Date().getTime()

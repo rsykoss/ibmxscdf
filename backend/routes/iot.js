@@ -6,7 +6,7 @@ const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
 var multer = require('multer');
 
-multer({limits: { fieldSize: 25 * 1024 * 1024 }})
+multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
 const { bot } = require('../config/mongoose')
 
 const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) => {
@@ -28,20 +28,20 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) =>
 }
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, './public/storage');
+        cb(null, './public/storage');
     },
     filename: (req, file, cb) => {
-      cb(null, Date.now() + '-' + file.originalname+".png");
+        cb(null, Date.now() + '-' + file.originalname + ".png");
     }
-  });
+});
 
 const uploads = multer({
-    storage: storage 
+    storage: storage
 }).single('image');
 
 router.get('/report', async (req, res) => {
     generateIncident({})
-    res.json({success: true})
+    res.json({ success: true })
 })
 
 router.post('/report', uploads, async function (req, res) {
@@ -52,7 +52,7 @@ router.post('/report', uploads, async function (req, res) {
     const image = req.file
     generateIncident({
         deviceKey,
-        image,
+        imageURL: image,
         severity,
         eventType
     })
@@ -63,10 +63,10 @@ router.get('/fetchAllDevices', async function (req, res) {
     // const { deviceType } = req.body;
 
     let devices = await Device.find({})
-
+    console.log(devices);
     res.json({
         success: true,
-        name: 'Zong Han',
+        name: 'Hock Chuan',
         age: 88,
         gender: 'Male',
         address: 'Nanyang Technological',

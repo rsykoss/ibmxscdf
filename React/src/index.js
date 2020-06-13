@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 import useModel from './useModel'
 import ObjectDetectionVideo from './object-detection-video/ObjectDetectionVideo'
+import Home from './Home';
 
 import './index.css'
 
@@ -70,4 +71,4 @@ const App = () => {
 }
 
 const rootElement = document.getElementById('root')
-ReactDOM.render(<App />, rootElement)
+ReactDOM.render(<Home />, rootElement)

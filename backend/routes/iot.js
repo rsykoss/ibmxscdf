@@ -1,20 +1,33 @@
 var express = require("express");
+var fs = require("fs")
 var router = express.Router();
 const User = require('../models/user.js');
 const Device = require('../models/device.js');
+var multer = require('multer');
+multer({limits: { fieldSize: 25 * 1024 * 1024 }})
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './public/storage');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname+".png");
+    }
+  });
+const uploads = multer({
+    storage: storage 
+}).single('image');
 
-router.post('/report', async function (req, res) {
+router.post('/report', uploads, async function (req, res) {
     const { deviceKey,
-        imageURL,
         severity,
         eventType
     } = req.body;
-
+    const image = req.file
     console.log({
         deviceKey,
-        imageURL,
         severity,
-        eventType
+        eventType,
+        image
     })
     res.json({ success: true })
 });

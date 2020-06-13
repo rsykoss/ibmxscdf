@@ -6,7 +6,25 @@ const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
 var multer = require('multer');
 
-multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
+const cloudinary = require("cloudinary");
+const cloudinaryStorage = require("multer-storage-cloudinary");
+cloudinary.config({
+    cloud_name: 'dwxuq2vjl',
+    api_key: '283414629713892',
+    api_secret: 'ak5qWnl6h1RzVo_MLN-bIe_B53k'
+});
+
+const storage = cloudinaryStorage({
+    cloudinary: cloudinary,
+    folder: "demo",
+    allowedFormats: ["jpg", "png"],
+    transformation: [{ width: 500, height: 500, crop: "limit" }]
+});
+
+// multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
+
+const parser = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 } });
+
 const { bot } = require('../config/mongoose')
 
 const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) => {
@@ -26,14 +44,14 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) =>
         }
     });
 }
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './public/storage');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname + ".png");
-    }
-});
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './public/storage');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname + ".png");
+//     }
+// });
 
 const uploads = multer({
     storage: storage
@@ -44,12 +62,13 @@ router.get('/report', async (req, res) => {
     res.json({ success: true })
 })
 
-router.post('/report', uploads, async function (req, res) {
+router.post('/report', parser.any(), async function (req, res) {
     const { deviceKey,
         severity,
         eventType
     } = req.body;
-    const image = req.file
+    const image = req.files[0].secure_url;
+    console.log(image);
     generateIncident({
         deviceKey,
         imageURL: image,

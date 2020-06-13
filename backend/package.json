@@ -14,7 +14,7 @@
     "axios": "^0.19.2",
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
-    "cloudinary": "^1.21.0",
+    "cloudinary": "^1.22.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dynamodb": "^1.2.1",

@@ -8,15 +8,16 @@ var multer = require('multer');
 
 const cloudinary = require("cloudinary");
 const cloudinaryStorage = require("multer-storage-cloudinary");
+
 cloudinary.config({
-    cloud_name: 'dwxuq2vjl',
-    api_key: '283414629713892',
-    api_secret: 'ak5qWnl6h1RzVo_MLN-bIe_B53k'
+    cloud_name: 'rsykoss',
+    api_key: '979912435841532',
+    api_secret: 'lo7EhZCAyKYyJ4z0SJ5FeVg0c5k'
 });
 
 const storage = cloudinaryStorage({
     cloudinary: cloudinary,
-    folder: "demo",
+    folder: "hackathon",
     allowedFormats: ["jpg", "png"],
     transformation: [{ width: 500, height: 500, crop: "limit" }]
 });

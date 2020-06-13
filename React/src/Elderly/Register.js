@@ -101,7 +101,7 @@ class Register extends Component {
                 <div class="card-body">
                     <h5 class="card-title">{d.deviceKey}</h5>
                     {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                    <a href="#" class="btn btn-primary">{d.type}</a>
+                    <a href="/cctv" class="btn btn-primary">{d.type}</a>
                 </div>
             </div>
             return <div> {d.imageURL} | {d.deviceKey}</div>

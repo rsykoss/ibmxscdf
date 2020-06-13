@@ -1,5 +1,5 @@
 import React from 'react';
-import Register from './Elderly/Register'
+import Register from '../Elderly/Register'
 
 function Home() {
     return (

@@ -1,11 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-import useModel from './useModel'
-import ObjectDetectionVideo from './object-detection-video/ObjectDetectionVideo'
-import Home from './Home';
+import useModel from '../useModel'
+import ObjectDetectionVideo from '../object-detection-video/ObjectDetectionVideo'
 
-import './index.css'
+import '../index.css'
 
 const axios = require('axios').default;
 var accident
@@ -123,7 +121,7 @@ const CCTV = () => {
       <ObjectDetectionVideo
         model={model}
         onPrediction={handlePrediction}
-        // render={render}
+        render={render}
         // aspectFill: The option to scale the video to fill the size of the view.
         //             Some portion of the video may be clipped to fill the view's
         //             bounds.

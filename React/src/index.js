@@ -1,8 +1,20 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './Home';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import './index.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+
+// import Navigation from './components/Navbar';
+import Routes from './routes';
 
 ReactDOM.render(
-<Home />,
-document.getElementById('root')
+    <Router>
+        <div className="App">
+            {/* <Navigation /> */}
+            <Routes />
+        </div>
+    </Router>,
+    document.getElementById('root')
 );

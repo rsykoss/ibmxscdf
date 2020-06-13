@@ -26,7 +26,11 @@ var incidentSchema = new mongoose.Schema({
         longitude: Number,
         latitude: Number
     },
-    imageURL: String
+    imageURL: String,
+    respondents: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }]
 });
 
 module.exports = mongoose.model("Incident", incidentSchema);

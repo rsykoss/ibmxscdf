@@ -23,6 +23,14 @@ const storage = cloudinaryStorage({
 });
 
 // multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, './public/storage');
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, Date.now() + '-' + file.originalname + ".png");
+//     }
+// });
 
 const parser = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 } });
 
@@ -45,14 +53,7 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType }) =>
         }
     });
 }
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './public/storage');
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + '-' + file.originalname + ".png");
-//     }
-// });
+
 
 const uploads = multer({
     storage: storage
@@ -68,7 +69,7 @@ router.post('/report', parser.any(), async function (req, res) {
         severity,
         eventType
     } = req.body;
-    const image = req.files[0].secure_url;
+    const image = req.files.length > 0 ? req.files[0].secure_url : 'no image found';
     console.log(image);
     generateIncident({
         deviceKey,

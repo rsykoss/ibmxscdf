@@ -7,7 +7,7 @@ import './index.css';
 // import 'bootstrap/dist/css/bootstrap.css';
 
 // import Navigation from './components/Navbar';
-import Routes from './routes';
+import Routes from './routes/routes';
 
 ReactDOM.render(
     <Router>

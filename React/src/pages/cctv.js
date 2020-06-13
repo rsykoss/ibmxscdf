@@ -1,9 +1,9 @@
 import React from 'react'
 
-import useModel from './useModel'
-import ObjectDetectionVideo from './object-detection-video/ObjectDetectionVideo'
+import useModel from '../useModel'
+import ObjectDetectionVideo from '../object-detection-video/ObjectDetectionVideo'
 
-import './index.css'
+import '../index.css'
 
 const axios = require('axios').default;
 var accident

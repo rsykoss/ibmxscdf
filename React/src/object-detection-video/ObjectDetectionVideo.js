@@ -5,7 +5,7 @@ import { getRetinaContext } from './retina-canvas'
 import { renderPredictions } from './render-predictions'
 
 const ObjectDetectionVideo = React.memo(
-  ({ model, onPrediction, fit, mirrored, render, incident }) => {
+  ({ model, onPrediction, fit, mirrored, render }) => {
     const videoRef = useRef()
     const canvasRef = useRef()
 
@@ -41,11 +41,6 @@ const ObjectDetectionVideo = React.memo(
       ctx.setWidth(wantedWidth)
       ctx.setHeight(wantedHeight)
       ctx.clearAll()
-      if (incident) {
-        ctx.getContext('2d').drawImage(videoRef, 0, 0, wantedWidth, wantedHeight);
-        const imgUrl = ctx.toDataURL('image/png')
-        console.log(imgUrl)
-      }
       // Update predictions to match canvas.
       const offsetPredictions = predictions.map((prediction) => {
         let x = prediction.bbox[0] * scale + xOffset
@@ -65,7 +60,7 @@ const ObjectDetectionVideo = React.memo(
       requestAnimationFrame(() => {
         detectFrame()
       })
-    }, [fit, mirrored, model, onPrediction, render, incident])
+    }, [fit, mirrored, model, onPrediction, render])
 
     if (canvasRef.current) {
       canvasRef.current.style.position = 'absolute'

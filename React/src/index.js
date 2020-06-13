@@ -16,20 +16,8 @@ const handlePrediction = (predictions) => {
     if (frame.length > numDetected) {
       console.log(frame.length)
       console.log(accident)
-      incident = true
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          deviceKey: "blah",
-          imageURL: "HALLO",
-          severity: 0, // 1 or 2
-          eventType: accident
-        })
-      };
-      fetch('http://localhost:3001/iot/report', requestOptions)
-      //     .then(response => response.json())
-      //     .then(data => this.setState({ postId: data.id }));
+      imageCapture()
+      sendReq()
       alert(accident)
       frame = []
     } else frame = [] // re initialise frame
@@ -44,6 +32,33 @@ const handlePrediction = (predictions) => {
   // console.timeEnd('detect')
   // console.time('detect')
 
+}
+
+const imageCapture = () => {
+  var video = document.getElementsByTagName('video')[0];
+  var canvas = document.getElementsByTagName('canvas')[0];
+  var ctx = canvas.getContext('2d')
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  const imgUrl =canvas.toDataURL('image/png')
+  console.log(imgUrl)
+  return imgUrl
+}
+
+const sendReq = () => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      deviceKey: "blah",
+      imageURL: "HALLO",
+      severity: 0, // 1 or 2
+      eventType: accident
+    })
+  };
+  fetch('http://localhost:3001/iot/report', requestOptions)
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ postId: data.id }));
+  
 }
 
 const render = (ctx, predictions) => {
@@ -72,7 +87,6 @@ const App = () => {
       <ObjectDetectionVideo
         model={model}
         onPrediction={handlePrediction}
-        incident={incident}
         // render={render}
         // aspectFill: The option to scale the video to fill the size of the view.
         //             Some portion of the video may be clipped to fill the view's

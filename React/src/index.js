@@ -12,6 +12,7 @@ import Routes from './routes/routes';
 // import CCTV from './cctv';
 
 ReactDOM.render(
+<<<<<<< HEAD
 
   <div className="App">
     {/* <Navigation /> */}
@@ -20,3 +21,13 @@ ReactDOM.render(
   ,
   document.getElementById('root')
 );
+=======
+    <Router>
+        <div className="App">
+            {/* <Navigation /> */}
+            <Routes />
+        </div>
+    </Router>,
+    document.getElementById('root')
+);
+>>>>>>> e7ceb64d1de7b02dd9dcd191fb65312fd347975f

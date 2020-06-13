@@ -33,16 +33,16 @@ const handlePrediction = (predictions) => {
   predictions.forEach((prediction) => {
     console.log(prediction.label)
     if (prediction.label === "Major kitchen fire"){
-      accident = "Major Fire Accident"
+      accident = "fire"
       frame.majorFire.push(Date.now())
     }else if (prediction.label === "Minor kitchen fire"){
-      accident = "Minor Fire Accident"
+      accident = "fire"
       frame.minorFire.push(Date.now())
     }else if (prediction.label === "Major Fall"){
-      accident = "Major Fall Accident"
+      accident = "accident"
       frame.majorFall.push(Date.now())
     }else if (prediction.label === "Minor Fall"){
-      accident = "Minor Fall Accident"
+      accident = "accident"
       frame.minorFall.push(Date.now())
     }
   })  
@@ -78,8 +78,10 @@ function dataURItoBlob(dataURI) {
 
 function sendReq(image, severity) {
   var bodyFormData = new FormData();
-  // const {device} = props.location.state
-  bodyFormData.set('deviceKey', this);
+  let search = window.location.search;
+  var deviceKey = search.split('=')[1]
+  console.log(deviceKey)
+  bodyFormData.set('deviceKey', deviceKey);
   bodyFormData.append('image', image);
   bodyFormData.set('severity', severity);
   bodyFormData.set('eventType', accident);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import './register.css'
 import { Link } from 'react-router-dom';
 // import Profile from './Profile'
 
@@ -25,30 +26,10 @@ class Register extends Component {
     }
 
     onChange = (e) => {
-        /*
-          Because we named the inputs to match their
-          corresponding values in state, it's
-          super easy to update the state
-        */  
 
         console.log({ [e.target.name]: e.target.value })
         this.setState({ [e.target.name]: e.target.value });
     }
-
-    /*
-        getUser = (name, address, deviceType) => {
-            this.name = name
-            this.address = address
-            this.deviceType = deviceType
-            userData = {name, address, deviceType}
-        }
-    */
-
-    // fetch('http://localhost:3001/iot/registerDevice', {
-    //     method: 'post',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({deviceType:"CCTV"})
-    //     }).then(response => console.log(response.json()))
 
     componentDidMount = () => {
         axios({
@@ -72,30 +53,17 @@ class Register extends Component {
     registerDevice = (e) => {
         e.preventDefault();
 
-        // fetch('http://localhost:3001/iot/registerDevice', {
-        // method: 'post',
-        // headers: { 
-        //     Accept: 'application/json',
-        //     'Content-Type': 'application/json' 
-        // },
-        // body: JSON.stringify({deviceType:"CCTV"})
-        // }).then((response) => console.log(response));
-
-
-        // const { name, addresss, deviceType } = this.state;
-        axios.post(API_register, { deviceType: this.state.deviceType })
+        axios.post(API_register, { deviceType: "cctv" })
             .then((response) => {
                 console.log('teste');
                 console.log(response)
-                //     this.setState({
-                //         devices: [...this.state.deviceType, result.data.devices]
-                // });
-                console.log(response.data.newDevice)
-                this.setState({ devices: [...this.state.devices, response.data.newDevice] })
+                this.setState({ devices: response.data.devices })
             });
-        //display Profile page
-      
-        // return <Profile />
+
+        return <div className="container">
+            {this.renderMyDevices()}
+        </div>
+
     }
 
     renderMyDevices() {
@@ -107,7 +75,7 @@ class Register extends Component {
                 <div class="card-body">
                     <h5 class="card-title">{d.deviceKey}</h5>
                     {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                    <Link to={{pathname: "/cctv", state: {device:d.deviceKey}}} class="btn btn-primary">{d.type}</Link>
+                    <button class="btn btn-primary" onClick={() => gotoCCTV(d.deviceKey)}>{d.type}</button>
                 </div>
             </div>
             return <div> {d.imageURL} | {d.deviceKey}</div>
@@ -116,10 +84,10 @@ class Register extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className='col'>
-                        <form onSubmit={this.registerDevice}>
+            <div className="container col-10">
+                <div className="row row-2">
+                    <div className='col col-8'>
+                        <form className='form' onSubmit={this.registerDevice}>
                             <label>
                                 Name:</label>
                             <input type="text" name="name" value={this.state.name} onChange={this.onChange} />
@@ -131,18 +99,17 @@ class Register extends Component {
 
                             <br />
                             <label>
-                                Device Type:
-                                </label>
-                            <select name='deviceType' defaultValue={this.state.deviceType} onChange={this.onChange}>
-                                <option value="cctv">CCTV</option>
-                                <option value="sensor">Sensor</option>
+                                Device Type: </label>
+                            <select className="dropdown" defaultValue={this.state.deviceType} onChange={this.onChange}>
+                                <option value="CCTV">CCTV</option>
+                                <option value="Sensor">Sensor</option>
                             </select>
 
-                            <br />
-                            <button className="btn btn-lg btn-primary" type="submit">Submit</button>
+                            
+                            <button className="btn btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
-                    <div className="col">
+                    <div className="container col-5">
                         {this.renderMyDevices()}
                     </div>
                 </div>
@@ -151,5 +118,7 @@ class Register extends Component {
     }
 
 }
-
+function gotoCCTV(key) {
+    window.location.href = "http://localhost:3000/cctv?productKey="+key;
+}
 export default Register;

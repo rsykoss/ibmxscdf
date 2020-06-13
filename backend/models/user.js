@@ -7,7 +7,14 @@ var userSchema = new mongoose.Schema({
         type: String,
         default: "S1234567Z"
     },
-    mobile: String,
+    mobile: {
+        type: String,
+        default: "90066259"
+    },
+    name: {
+        type: String,
+        default: "Hock Chuan"
+    },
     locations: [{
         longitude: Number,
         latitude: Number

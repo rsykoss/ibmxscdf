@@ -116,24 +116,43 @@ You can find a running system to test at [kampung.herokuapp.com](https://kampung
 * [Cloudinary](https://rometools.github.io/rome/) - Used for Object Storage
 * [Heroku](https://www.heroku.com/) - Used for Deployment
 
-## Contributing (not yet)
+## Versioning
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+We used [GitHub](https://github.com/) for versioning.
 
-## Versioning (not yet)
+## Authors
+* **Goh Zhong Han** - [zonghangoh](https://github.com/zonghangoh)
+* **Ko Seoyoon** - [rsykoss](https://github.com/rsykoss)
+* **Latrecia Wee** - [lat-9988](https://github.com/lat-9988)
+* **Ng Xin Ping** - [myystxx](https://github.com/myystxx)
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+* **bourdakos1 && justinthec** - *Initial template* - [object-detection-react](https://github.com/cloud-annotations/object-detection-react)
 
-## Authors (not yet)
+See also [commits](https://github.com/rsykoss/ibmxscdf/commits/master) made in this project.
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+## Acknwledgement & License
 
-See also the list of [contributors](https://github.com/Code-and-Response/Project-Sample/graphs/contributors) who participated in this project.
+The template for this project is from (github.com/cloud-annotations/object-detection-react)[https://github.com/cloud-annotations/object-detection-react] which has a license:
+```
+MIT License
 
-## License
+Copyright (c) 2019 Nick Bourdakos
 
-This project is licensed under the Apache 2 License - see the [LICENSE](LICENSE) file for details
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## Acknowledgments
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-* Based on [Billie Thompson's README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2).
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```

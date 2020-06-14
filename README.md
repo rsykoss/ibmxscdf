@@ -94,9 +94,15 @@ By opening up `http://localhost:3000` in browser, the IOT registration page is a
 
 ## Live demo 
 You can find a running system to test below:
-[frontend]( https://zonghan.now.sh/)
-[backend](https://kampung-api.herokuapp.com/)
 
+* [frontend]( https://zonghan.now.sh/)
+  Do try to sign up through telegram and test the api. We also provide API integrations
+* [backend](https://kampung-api.herokuapp.com/)
+  Try going to the cctv page to mock live cctv that triggers request to telegram when in danger. 
+
+
+![image](https://user-images.githubusercontent.com/42865415/84589969-17a76e00-ae65-11ea-83bf-929b1b55e48d.png)
+![image](https://user-images.githubusercontent.com/42865415/84589978-2c840180-ae65-11ea-974b-dfefc46017d6.png)
 ![image](https://user-images.githubusercontent.com/42865415/84590019-81277c80-ae65-11ea-9f28-e1be0e834b66.png)
 
 

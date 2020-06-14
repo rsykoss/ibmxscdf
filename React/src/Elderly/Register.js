@@ -41,7 +41,6 @@ class Register extends Component {
         console.log(id)
         axios.get(API_fetch, {params: {id:id}})
             .then((result) => {
-            console.log(result);
             this.setState({
                 id: result.id,
                 name: result.data.name,
@@ -53,28 +52,20 @@ class Register extends Component {
 
         });
     }
-    
 
 
     registerDevice = (e) => {
         e.preventDefault();
-
         axios.post(API_register, { deviceType: "cctv", id: this.state.id })
-            .then((response) => {
-                
-                console.log(response)
-                let arr = this.state.devices
-                if (arr === []){
-                    console.log('test');
-                    arr = response.data.newDevice
-                }
-                else {
-                    arr = arr.push(response.data.newDevice)
-
-                }
-                this.setState({ devices: [arr] })
-            });
-
+        .then((response) => {
+            
+            this.setState(state => {
+                const devices = state.devices.concat(response.data.newDevice);
+                return {devices}
+            })
+        });
+        
+        
         return <div className="container">
             {this.renderMyDevices()}
         </div>

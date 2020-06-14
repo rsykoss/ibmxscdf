@@ -40,7 +40,7 @@ It's imperative that learning and creating can continue when educational institu
 
 ## The architecture (not done yet)
 
-![Image Here](https://developer.ibm.com/developer/tutorials/cfc-starter-kit-speech-to-text-app-example/images/cfc-covid19-remote-education-diagram-2.png)
+![image](https://user-images.githubusercontent.com/42865415/84589124-3440a780-ae5f-11ea-944c-76f11c65a500.png)
 
 1. The user navigates to the site and uploads a video file.
 2. Watson Speech to Text processes the audio and extracts the text.
@@ -51,8 +51,8 @@ It's imperative that learning and creating can continue when educational institu
 
 [More detail is available here](DESCRIPTION.md)
 
-## Project roadmap (not done yet)
-![image](https://user-images.githubusercontent.com/42865415/84589090-f04da280-ae5e-11ea-9ced-fee11c30066d.png)
+## Project roadmap
+![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)
 
 ## Getting started (doing)
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Live copy of this is up in section [Live demo](#live-demo)

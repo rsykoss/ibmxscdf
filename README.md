@@ -56,7 +56,8 @@ It's imperative that learning and creating can continue when educational institu
 ![Roadmap](roadmap.jpg)
 
 ## Getting started (doing)
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Live copy of this is up in section [Live demo](#live-demo)
+
 ### Prerequisites
 Make sure these software are installed:
 1. [Node.js](https://nodejs.org/en/download/)
@@ -68,54 +69,39 @@ node -v
 npm -v
 git --version
 ```
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be, for example
-
+### Set Up
+If all the prerequisites have been fulfilled, follow the steps below. This repository contains server and React app hence node modules have to be installed and built separately.
+1. **Clone Git Repo**
 ```bash
-export TOKEN="fffd0923aa667c617a62f5A_fake_token754a2ad06cc9903543f1e85"
-export EMAIL="jane@example.com"
-dnf install npm
-node samplefile.js
-Server running at http://127.0.0.1:3000/
+git clone https://github.com/rsykoss/ibmxscdf.git
 ```
-
-And repeat
-
+2. **npm install for server** 
 ```bash
-curl localhost:3000
-Thanks for looking at Code-and-Response!
+cd ibmxscdf/backend
+npm install
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests (we dont have?)
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests (we dont have?)
-
-Explain what these tests test and why, if you were using something like `mocha` for instnance
-
+3. **Start server**
+In the same directory,
 ```bash
-npm install mocha --save-dev
-vi test/test.js
-./node_modules/mocha/bin/mocha
+npm start
 ```
-
-### And coding style tests (we dont have?)
-
-Explain what these tests test and why, if you chose `eslint` for example
-
+Now the server should be running in `localhost:3001`
+4. **npm install for React app** 
+Open up a seperate terminal.
 ```bash
-npm install eslint --save-dev
-npx eslint --init
-npx eslint sample-file.js
+cd ../React
+npm install
 ```
+5. **Start React app**
+In the same directory,
+```bash
+npm start
+```
+Now the webapp should be running in `localhost:3000`.
+6. **Open localhost:3000**
+By opening up `http://localhost:3000` in browser, the IOT registration page is available. For demo purpose, we have placed a link to access webcam which will be acting like the cctv camera in this demo. 
 
-## Live demo (havent)
+## Live demo 
 
 You can find a running system to test at [kampung.herokuapp.com](https://kampung.herokuapp.com/).
 

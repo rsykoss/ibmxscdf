@@ -1,10 +1,6 @@
-# Submission name
+# Kampung App
+Creative solution meant to help elderly blah.
 
-[![License](https://img.shields.io/badge/License-Apache2-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0) [![Slack](https://img.shields.io/badge/Join-Slack-blue)](https://callforcode.org/slack) [![Website](https://img.shields.io/badge/View-Website-blue)](https://code-and-response.github.io/Project-Sample/)
-
-A basic GitHub repository example for Call for Code submissions and those projects that join the Code and Response initiative. Not all sections or files are required. You can make this as simple or as in-depth as you need.
-
-*Read this in other languages: [English](README.md), [한국어](README.ko.md), [português](README.pt_br.md).*
 
 ## Contents
 
@@ -34,6 +30,7 @@ Part of the World Health Organization's guidance on limiting further spread of C
 Schools and teachers can continue to engage with their students through virtual classrooms, and even create interactive spaces for classes. As parents face a new situation where they may need to homeschool their children, finding appropriate online resources is important as well.
 
 ### The idea
+Our team chose to work on problem statement A. We wish to address the lack of efficiency with the current method of alerts which hinges on manual reports. By recognising that most of the incidents happen at the homes of the elderly, community reports to alert CFRs would not be sufficient. For elderly who live alone, they might face challenges in contacting SCDF during incidents such as losing consciousness. 
 
 It's imperative that learning and creating can continue when educational institutions have to shift the way they teach in times of crises, such as the COVID-19 pandemic. Providing a set of open source tools, backed by IBM Cloud and Watson Services, will enable educators to more easily make content available for their students.
 
@@ -121,16 +118,18 @@ npx eslint sample-file.js
 
 ## Live demo
 
-You can find a running system to test at [callforcode.mybluemix.net](http://callforcode.mybluemix.net/)
+You can find a running system to test at [kampung.herokuapp.com](https://kampung.herokuapp.com/).
 
 ## Built with
 
-* [IBM Cloudant](https://cloud.ibm.com/catalog?search=cloudant#search_results) - The NoSQL database used
-* [IBM Cloud Functions](https://cloud.ibm.com/catalog?search=cloud%20functions#search_results) - The compute platform for handing logic
-* [IBM API Connect](https://cloud.ibm.com/catalog?search=api%20connect#search_results) - The web framework used
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [IBM Watson Studio???](https://cloud.ibm.com/catalog/services/watson-studio) - Platform used to generate object recognition model
+* [React App](https://reactjs.org/) - Library used to build user interface (website for IOT configuration) 
+* [Next.JS](https://nextjs.org/) - React Framework to build user interface (website for Partners or volunteers)
+* [Node.JS](https://nodejs.org/en/about/) - Server using Javascript runtime environment
+* [Express](https://expressjs.co  m/) - The web framework used for Node.js
+* [MongoDB](https://www.mongodb.com/) -Used as main Database
+* [Cloudinary](https://rometools.github.io/rome/) - Used for Object Storage
+* [Heroku](https://www.heroku.com/) - Used for Deployment
 
 ## Contributing
 

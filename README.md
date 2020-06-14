@@ -2,7 +2,7 @@
 A comprehensive IT solution to increase the efficiency of the current alert system for quicker response to incidents involving elderly. Our team name, Kampung App, was named with an ideal of involving the community or "Kampung" in local slang. The team comprises of Zong Han, Seoyoon, Xin Ping and Latrecia. We are all students who have a passion for using technology for the betterment of society.
 
 
-## Contents (need to finalise)
+## Contents
 
 1. [Short description](#short-description)
 1. [Demo video](#demo-video)
@@ -14,7 +14,7 @@ A comprehensive IT solution to increase the efficiency of the current alert syst
 1. [Contributing](#contributing)
 1. [Versioning](#versioning)
 1. [Authors](#authors)
-1. [License & Acknowledgement](#cknowledgement-&-license)
+1. [License & Acknowledgement](#acknowledgement-and-license)
 
 ## Short description
 
@@ -38,16 +38,10 @@ Our team chose to work on problem statement, A by automating the processes invol
 
 ![image](https://user-images.githubusercontent.com/42865415/84589124-3440a780-ae5f-11ea-944c-76f11c65a500.png)
 
-1.	The IBM Cloud object storage is for storing of the images used by the IBM Watson Machine Learning.
-2.	IBM Watson Machine learning service then provides a trained model. 
-3.	The trained model which will be used by the IOTs such as CCTVs or sensors in order to detect frequent accidents type and severity.
-4.	The elderly will be monitored real-time by the IOTs. 
-5.	When a major accident takes place, the SCDFs will be notified immediately, together with a live image capture of the situation for their assessment.
-6.	When a minor accident takes place, information would be sent to the express server instead.
-7.	The information would then be package and sent through telegram.
-8.	The telegram app would then notify the CFRs / volunteers.
-9.	Other companies can build upon this system by connecting to the IOT. 
-
+1. The user navigates to the site and uploads a video file.
+2. Watson Speech to Text processes the audio and extracts the text.
+3. Watson Translation (optionally) can translate the text to the desired language.
+4. The app stores the translated text as a document within Object Storage.
 
 ## Project roadmap
 ![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)
@@ -109,12 +103,11 @@ You can find a running system to test below:
 
 ![image](https://user-images.githubusercontent.com/42865415/84589969-17a76e00-ae65-11ea-83bf-929b1b55e48d.png)
 ![image](https://user-images.githubusercontent.com/42865415/84589978-2c840180-ae65-11ea-974b-dfefc46017d6.png)
-![image](https://user-images.githubusercontent.com/42865415/84590019-81277c80-ae65-11ea-9f28-e1be0e834b66.png)
 
 
 
 
-## Built with (done but need to verify)
+## Built with
 
 * [IBM Watson Machine Learning](https://www.ibm.com/sg-en/cloud/machine-learning - Machine learning instance to train models
 * [IBM Cloud Object Storage](https://www.ibm.com/sg-en/cloud/object-storage) - Used for machine learning Object storage
@@ -140,7 +133,7 @@ We used [GitHub](https://github.com/) for versioning.
 
 See also [commits](https://github.com/rsykoss/ibmxscdf/commits/master) made in this project.
 
-## Acknowledgement & License
+## Acknowledgement and License
 
 The template for this project is from (github.com/cloud-annotations/object-detection-react)[https://github.com/cloud-annotations/object-detection-react] which has a license:
 ```

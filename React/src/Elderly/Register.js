@@ -33,17 +33,14 @@ class Register extends Component {
 
     componentDidMount = () => {
         let search = window.location.search;
-        var userid = search.split('=')
-        if (userid.length == 2){
-            userid = userid[1]
+        var id = search.split('=')
+        if (id.length == 2){
+            id = id[1]
         } else 
-            userid = '5ee55bf1e51b411a29f81915'
-        console.log(userid)
-        axios({
-            method: 'get',
-            url: API_fetch,
-            data: userid
-        }).then((result) => {
+            id = ''
+        console.log(id)
+        axios.get(API_fetch, {params: {id:id}})
+            .then((result) => {
             console.log(result);
             this.setState({
                 id: result.id,
@@ -62,7 +59,7 @@ class Register extends Component {
     registerDevice = (e) => {
         e.preventDefault();
 
-        axios.post(API_register, { deviceType: "cctv", userid: this.state.id })
+        axios.post(API_register, { deviceType: "cctv", id: this.state.id })
             .then((response) => {
                 
                 console.log(response)

@@ -52,8 +52,7 @@ It's imperative that learning and creating can continue when educational institu
 [More detail is available here](DESCRIPTION.md)
 
 ## Project roadmap (not done yet)
-
-![Roadmap](roadmap.jpg)
+![image](https://user-images.githubusercontent.com/42865415/84589090-f04da280-ae5e-11ea-9ced-fee11c30066d.png)
 
 ## Getting started (doing)
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Live copy of this is up in section [Live demo](#live-demo)

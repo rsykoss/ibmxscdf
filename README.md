@@ -7,17 +7,14 @@ A comprehensive IT solution to increase the efficiency of the current alert syst
 1. [Short description](#short-description)
 1. [Demo video](#demo-video)
 1. [The architecture](#the-architecture)
-1. [Long description](#long-description)
 1. [Project roadmap](#project-roadmap)
 1. [Getting started](#getting-started)
-1. [Running the tests](#running-the-tests)
 1. [Live demo](#live-demo)
 1. [Built with](#built-with)
 1. [Contributing](#contributing)
 1. [Versioning](#versioning)
 1. [Authors](#authors)
-1. [License](#license)
-1. [Acknowledgments](#acknowledgments)
+1. [License& Ack](#Acknowledgement & License)
 
 ## Short description
 
@@ -45,10 +42,6 @@ Our team chose to work on problem statement, A by automating the processes invol
 2. Watson Speech to Text processes the audio and extracts the text.
 3. Watson Translation (optionally) can translate the text to the desired language.
 4. The app stores the translated text as a document within Object Storage.
-
-## Long description
-
-[More detail is available here](DESCRIPTION.md)
 
 ## Project roadmap
 ![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)
@@ -104,10 +97,8 @@ You can find a running system to test below:
 [frontend]( https://zonghan.now.sh/)
 [backend](https://kampung-api.herokuapp.com/)
 
-![image](https://user-images.githubusercontent.com/42865415/84589969-17a76e00-ae65-11ea-83bf-929b1b55e48d.png)
-![image](https://user-images.githubusercontent.com/42865415/84589978-2c840180-ae65-11ea-974b-dfefc46017d6.png)
-![image](https://user-images.githubusercontent.com/42865415/84589982-39085a00-ae65-11ea-9183-4a9872d769c6.png)
-![image](https://user-images.githubusercontent.com/42865415/84589999-4faeb100-ae65-11ea-818b-e431fa6b323d.png)
+![image](https://user-images.githubusercontent.com/42865415/84590019-81277c80-ae65-11ea-9f28-e1be0e834b66.png)
+
 
 
 

@@ -110,7 +110,7 @@ You can find a running system to test at [kampung.herokuapp.com](https://kampung
 * [React App](https://reactjs.org/) - Library used to build user interface (website for IOT configuration) 
 * [Next.JS](https://nextjs.org/) - React Framework to build user interface (website for Partners or volunteers)
 * [Node.JS](https://nodejs.org/en/about/) - Server using Javascript runtime environment
-* [Express](https://expressjs.co  m/) - The web framework used for Node.js
+* [Express](https://expressjs.com/) - The web framework used for Node.js
 * [MongoDB](https://www.mongodb.com/) -Used as main Database
 * [Cloudinary](https://rometools.github.io/rome/) - Used for Object Storage
 * [Heroku](https://www.heroku.com/) - Used for Deployment
@@ -129,7 +129,7 @@ We used [GitHub](https://github.com/) for versioning.
 
 See also [commits](https://github.com/rsykoss/ibmxscdf/commits/master) made in this project.
 
-## Acknwledgement & License
+## Acknowledgement & License
 
 The template for this project is from (github.com/cloud-annotations/object-detection-react)[https://github.com/cloud-annotations/object-detection-react] which has a license:
 ```

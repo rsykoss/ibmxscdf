@@ -18,14 +18,14 @@ const handlePrediction = (predictions) => {
         console.log(accident)
         var severity, urlLink = ""
         if(key.includes("minor")){
-          severity = 0
+          severity = "Minor"
           // urlLink = getImageURL()
         }else {
-          severity = 1
+          severity = "Major"
           urlLink = getImageURL()
         }
+        // alert(key)
         sendReq(urlLink, severity)
-        alert(accident)
         frame[key] = [] 
       } else frame[key] = []  // re initialise frame
     }
@@ -33,16 +33,16 @@ const handlePrediction = (predictions) => {
   predictions.forEach((prediction) => {
     console.log(prediction.label)
     if (prediction.label === "Major kitchen fire"){
-      accident = "fire"
+      accident = "Fire"
       frame.majorFire.push(Date.now())
     }else if (prediction.label === "Minor kitchen fire"){
-      accident = "fire"
+      accident = "Fire"
       frame.minorFire.push(Date.now())
     }else if (prediction.label === "Major Fall"){
-      accident = "accident"
+      accident = "Accident"
       frame.majorFall.push(Date.now())
     }else if (prediction.label === "Minor Fall"){
-      accident = "accident"
+      accident = "Accident"
       frame.minorFall.push(Date.now())
     }
   })  

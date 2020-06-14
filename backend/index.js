@@ -67,10 +67,9 @@ bot.on('message', async (msg) => {
       if (msg.chat.username) placeholderUser.name = msg.chat.username;
       await placeholderUser.save();
       await bot.sendMessage(chatId, 'Hello, ' + msg.chat.username + '. Your account has been tagged to NRIC ' + placeholderUser.nric);
-      bot.sendMessage(chatId, 'Send a location where you would like to receive help notifications for.');
+      bot.sendMessage(chatId, 'Send a location where you would like to receive notifications for.');
     } else {
       console.log('placeholder user not found')
-      bot.sendMessage(chatId, 'Invalid account key');
     }
   }
 
@@ -219,7 +218,7 @@ bot.onText(/\/locations/, async (msg) => {
   if (user) {
     user.telegramState = 'Add Locations';
     user.save();
-    bot.sendMessage(chatId, 'Send a location where you would like to receive help requests for.');
+    bot.sendMessage(chatId, 'Send a location where you would like to receive notifications for.');
   }
 });
 

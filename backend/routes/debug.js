@@ -58,7 +58,7 @@ router.get('/resetAll', async function (req, res) {
     await User.deleteMany({})
     await Receiver.deleteMany({})
     await Device.deleteMany({})
-    await Product.deleteMany({})
+    // await Product.deleteMany({})
     res.json({ success: true })
 });
 

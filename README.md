@@ -1,5 +1,5 @@
-# Kampung App (not done yet)
-Creative solution meant to help elderly blah.
+# Kampung App 
+A comprehensive IT solution to increase the efficiency of the current alert system for quicker response to incidents involving elderly. Our team name, Kampung App, was named with an ideal of involving the community or "Kampung" in local slang. The team comprises of Zong Han, Seoyoon, Xin Ping and Latrecia. We are all students who have a passion for using technology for the betterment of society.
 
 
 ## Contents (need to finalise)
@@ -21,18 +21,17 @@ Creative solution meant to help elderly blah.
 
 ## Short description
 
-### What's the problem? (not done yet)
+### What's the problem? 
 
-Part of the World Health Organization's guidance on limiting further spread of COVID-19 is to practice social distancing. As a result, schools in most affected areas are taking precautionary measures by closing their facilities. With school-aged children at home for an indeterminate amount of time,  keeping them engaged, entertained, and on top of their education is important.
+With the increasingly aging population, it is no surprise that the elderly population (aged 65 and above) is the age group that SCDF received the most calls from. The elderly injuries are mainly due to falls and the highest frequency of occurrence is within their homes. This prove to be a challenge to the current alert system that hinges on manual reports be it by the community or the elderly himself. This might not be possible under certain scenarios i.e being unconscious. 
 
-### How can technology help? (not done yet)
+### How can technology help? 
 
-Schools and teachers can continue to engage with their students through virtual classrooms, and even create interactive spaces for classes. As parents face a new situation where they may need to homeschool their children, finding appropriate online resources is important as well.
+Technologies can help to streamline the contact and response process between the major stakeholders, namely SCDF and CFRs and other companies who wish to collaborate. Traditional contact procedure like the need of making a phone call for reporting an incident can be automated.
 
-### The idea (partial)
-Our team chose to work on problem statement A. We wish to address the lack of efficiency with the current method of alerts which hinges on manual reports. By recognising that most of the incidents happen at the homes of the elderly, community reports to alert CFRs would not be sufficient. For elderly who live alone, they might face challenges in contacting SCDF during incidents such as losing consciousness. 
+### The idea 
 
-It's imperative that learning and creating can continue when educational institutions have to shift the way they teach in times of crises, such as the COVID-19 pandemic. Providing a set of open source tools, backed by IBM Cloud and Watson Services, will enable educators to more easily make content available for their students.
+Our team chose to work on problem statement, A by automating the processes involved in an incident report from the detection of an incident to the eventual reporting of the incident to the relevant stakeholders. We plan to make use of technologies like embedded IOTs as well as IBM Cloud and Watson service to detect incidents more accurately.  The SCDFs and CFRs will be able to shorten their response time by using our intuitive interface that would be linked to the automated detection system. 
 
 ## Demo video (not done yet)
 
@@ -106,7 +105,8 @@ You can find a running system to test at [kampung.herokuapp.com](https://kampung
 
 ## Built with (done but need to verify)
 
-* [IBM Watson Studio???](https://cloud.ibm.com/catalog/services/watson-studio) - Platform used to generate object recognition model
+* [IBM Watson Machine Learning](https://www.ibm.com/sg-en/cloud/machine-learning - Machine learning instance to train models
+* [IBM Cloud Object Storage](https://www.ibm.com/sg-en/cloud/object-storage) - Used for machine learning Object storage
 * [React App](https://reactjs.org/) - Library used to build user interface (website for IOT configuration) 
 * [Next.JS](https://nextjs.org/) - React Framework to build user interface (website for Partners or volunteers)
 * [Node.JS](https://nodejs.org/en/about/) - Server using Javascript runtime environment

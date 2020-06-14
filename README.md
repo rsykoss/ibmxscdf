@@ -14,7 +14,7 @@ A comprehensive IT solution to increase the efficiency of the current alert syst
 1. [Contributing](#contributing)
 1. [Versioning](#versioning)
 1. [Authors](#authors)
-1. [License& Ack](#Acknowledgement & License)
+1. [License & Acknowledgement](#cknowledgement-&-license)
 
 ## Short description
 
@@ -30,24 +30,18 @@ Technologies can help to streamline the contact and response process between the
 
 Our team chose to work on problem statement, A by automating the processes involved in an incident report from the detection of an incident to the eventual reporting of the incident to the relevant stakeholders. We plan to make use of technologies like embedded IOTs as well as IBM Cloud and Watson service to detect incidents more accurately.  The SCDFs and CFRs will be able to shorten their response time by using our intuitive interface that would be linked to the automated detection system. 
 
-## Demo video (not done yet)
+## Demo video
 
-[![Watch the video](https://github.com/Code-and-Response/Liquid-Prep/blob/master/images/IBM-interview-video-image.png)](https://youtu.be/vOgCOoy_Bx0)
+[![Watch the video]()
 
-## The architecture (not done yet)
+## The architecture
 
 ![image](https://user-images.githubusercontent.com/42865415/84589124-3440a780-ae5f-11ea-944c-76f11c65a500.png)
 
-1.	The IBM Cloud object storage is for storing of the images used by the IBM Watson Machine Learning.
-2.	IBM Watson Machine learning service then provides a trained model 
-3.	The trained model which will be used by the IOTs such as CCTVs or sensors in order to detect frequent accidents type and severity.
-4.	The elderly will be monitored real-time by the IOTs. 
-5.	When a major accident takes place, the SCDFs will be notified immediately, together with a live image capture of the situation for their assessment.
-6.	When a minor accident takes place, information would be sent to the express server instead.
-7.	The information would then be package and sent through telegram.
-8.	The telegram app would then notify the CFRs / volunteers.
-9.	Other companies can build upon this system by connecting to the IOT. 
-
+1. The user navigates to the site and uploads a video file.
+2. Watson Speech to Text processes the audio and extracts the text.
+3. Watson Translation (optionally) can translate the text to the desired language.
+4. The app stores the translated text as a document within Object Storage.
 
 ## Project roadmap
 ![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)

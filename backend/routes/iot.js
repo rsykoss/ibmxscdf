@@ -76,7 +76,7 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType, even
 }
 
 router.get('/report', async (req, res) => {
-    let receiver = await Receiver.findById('5ee588ef1b94356043a8c7d4')
+    let receiver = await Receiver.findById('5ee59ad8365aea6fa2596826')
     let deviceKey
     if (true) {
         let product = await Product.findOne({}).lean()
@@ -121,7 +121,7 @@ router.get('/fetchAllDevices', async function (req, res) {
     const { id } = req.params;
     // localhost:3000
     // localhost:3000?id=12345566
-    let careReceiver = await Receiver.findById(id ? id : '5ee588ef1b94356043a8c7d4').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
+    let careReceiver = await Receiver.findById(id ? id : '5ee59ad8365aea6fa2596826').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
 
     res.json({
         success: true,
@@ -157,7 +157,7 @@ router.post('/registerDevice', async function (req, res) {
     const { deviceType, id } = req.body;
     console.log(deviceType);
 
-    let careReceiver = await Receiver.findById(id ? id : '5ee588ef1b94356043a8c7d4')
+    let careReceiver = await Receiver.findById(id ? id : '5ee59ad8365aea6fa2596826')
 
     let product = await Product.findOne({ deviceType }).lean()
 

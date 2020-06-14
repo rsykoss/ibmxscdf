@@ -4,18 +4,17 @@ const User = require('../models/user.js');
 const Receiver = require('../models/carereceiver.js');
 const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
-const Product = require('../models/device.js');
+const Product = require('../models/product.js');
 
 const { bot } = require('../config/mongoose')
 
 
 router.get('/', async function (req, res) {
-    bot.sendMessage('42402078', 'test', {
-        "reply_markup": {
-            "keyboard": [["I'm on it."], ["I don't care."]]
-        }
-    });
-    res.json({ success: true })
+    // let product = await Product.findOne({imageURL: ''})
+    // product.imageURL = 'https://s17026.pcdn.co/wp-content/uploads/sites/9/2016/11/protecting-businesses-161116.jpeg';
+    // product.save();
+    let p = await Product.find({})
+    res.json({ success: p })
 });
 
 

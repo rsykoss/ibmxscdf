@@ -30,6 +30,7 @@ Technologies can help to streamline the contact and response process between the
 
 Our team chose to work on problem statement, A by automating the processes involved in an incident report from the detection of an incident to the eventual reporting of the incident to the relevant stakeholders. We plan to make use of technologies like embedded IOTs as well as IBM Cloud and Watson service to detect incidents more accurately.  The SCDFs and CFRs will be able to shorten their response time by using our intuitive interface that would be linked to the automated detection system. 
 
+For more info please look at the [slides](https://docs.google.com/presentation/d/11f9n8uDKf3dlrtGnDtqDAiNdy9bhFe_h5NJMi2cAA4g/edit?usp=sharing)
 ## Demo video
 
 [![Watch the video]()
@@ -103,8 +104,6 @@ You can find a running system to test below:
 
 ![image](https://user-images.githubusercontent.com/42865415/84589969-17a76e00-ae65-11ea-83bf-929b1b55e48d.png)
 ![image](https://user-images.githubusercontent.com/42865415/84589978-2c840180-ae65-11ea-974b-dfefc46017d6.png)
-
-
 
 
 ## Built with

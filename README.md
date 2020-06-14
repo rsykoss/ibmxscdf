@@ -38,10 +38,16 @@ Our team chose to work on problem statement, A by automating the processes invol
 
 ![image](https://user-images.githubusercontent.com/42865415/84589124-3440a780-ae5f-11ea-944c-76f11c65a500.png)
 
-1. The user navigates to the site and uploads a video file.
-2. Watson Speech to Text processes the audio and extracts the text.
-3. Watson Translation (optionally) can translate the text to the desired language.
-4. The app stores the translated text as a document within Object Storage.
+1.	The IBM Cloud object storage is for storing of the images used by the IBM Watson Machine Learning.
+2.	IBM Watson Machine learning service then provides a trained model 
+3.	The trained model which will be used by the IOTs such as CCTVs or sensors in order to detect frequent accidents type and severity.
+4.	The elderly will be monitored real-time by the IOTs. 
+5.	When a major accident takes place, the SCDFs will be notified immediately, together with a live image capture of the situation for their assessment.
+6.	When a minor accident takes place, information would be sent to the express server instead.
+7.	The information would then be package and sent through telegram.
+8.	The telegram app would then notify the CFRs / volunteers.
+9.	Other companies can build upon this system by connecting to the IOT. 
+
 
 ## Project roadmap
 ![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)

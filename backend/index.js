@@ -86,9 +86,12 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const resp = match[1]; // the captured "whatever"
   console.log(resp)
-  bot.sendLocation(chatId, 1.4384, 103.8025);
 
-  let incident = await Incident.findById(resp);
+  let user = await User.findOne({ telegramId: String(chatId) }).exec();
+  bot.sendMessage(chatId, 'Go help granny with @' + user.name + '!');
+
+
+  let incident = await Incident.findById(resp).populate('responders').lean();
   if (!incident) {
     bot.sendLocation(chatId, 1.4384, 103.8025);
     // bot.sendMessage(chatId, 'No incident found.');
@@ -97,20 +100,100 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
     user.telegramState = 'Responding';
     user.incident = incident
     user.save();
-    incident.respondents.
     Incident.findOneAndUpdate(
       { _id: incident._id },
-      { $addToSet: { respondents: user._id } },
+      { $addToSet: { responders: user._id } },
       {
-          returnNewDocument: true
+        returnNewDocument: true
       }, function (error, profile) {
-          res.json({ msg: 'Success' })
+        res.json({ msg: 'Success' })
       });
-    bot.sendMessage(chatId, 'Go help granny!');
+
+    await bot.sendLocation(chatId, incident.latitude, incident.longitude);
+    let usersString = ''
+    incident.responders.map(r => {
+      usersString += '@' + r.name + ' '
+    })
+
+    let idleUsers = await User.find({
+      _id: { $ne: user._id },
+      telegramState: 'Neutral',
+      locations: {
+        $elemMatch: {
+          latitude: {
+            $gt: newIncident.latitude - 2 / 55,
+            $lt: newIncident.latitude + 2 / 55
+          },
+          longitude: {
+            $gt: newIncident.longitude - 2 / 55,
+            $lt: newIncident.longitude + 2 / 55
+          }
+        }
+      }
+    })
+
+    idleUsers.forEach(u => {
+      bot.sendMessage(u.telegramId, (incident.responders.length + 1) + " volunteers responding to Case " + incident._id);
+    })
+
+    let searchingUsers = await User.find({
+      _id: { $ne: user._id },
+      incident: incident._id,
+    })
+
+    searchingUsers.forEach(u => {
+      bot.sendMessage(u.telegramId, "@" + user.name + " has joined you in responding to Case " + incident._id);
+    })
+
+    bot.sendMessage(chatId, 'Go help granny with ' + usersString + '!');
   }
   // send back the matched "whatever" to the chat
 });
 
+bot.onText(/\/resolve/, async (msg) => {
+  const chatId = msg.chat.id;
+  let user = await User.findOne({ telegramId: String(chatId) }).exec();
+  console.log('pint')
+
+  if (user) {
+
+    let nearbyUsers = await User.find({
+      locations: {
+        $elemMatch: {
+          latitude: {
+            $gt: newIncident.latitude - 2 / 55,
+            $lt: newIncident.latitude + 2 / 55
+          },
+          longitude: {
+            $gt: newIncident.longitude - 2 / 55,
+            $lt: newIncident.longitude + 2 / 55
+          }
+        }
+      }
+    })
+
+    nearbyUsers.forEach(u => {
+      bot.sendMessage(u.telegramId, 'Case #' + user.incident + ' has been resolved.');
+    })
+
+    let incidentId = String(user.incident);
+    
+    User.updateMany({ incident: incidentId }, {
+      incident: null,
+      telegramState: 'Neutral',
+    }, (err) => { });
+
+    Incident.findOneAndUpdate({ _id: incidentId }, {
+      resolvedAt: new Date(),
+      resolvedBy: user
+    }, {
+      returnNewDocument: true
+    }, function (error, profile) {
+      res.json({ msg: 'Success' })
+    });
+
+  }
+});
 
 bot.onText(/\/locations/, async (msg) => {
   const chatId = msg.chat.id;

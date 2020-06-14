@@ -2,8 +2,10 @@ var express = require("express");
 var router = express.Router();
 const User = require('../models/user.js');
 const Receiver = require('../models/carereceiver.js');
-
+const Incident = require('../models/incident.js');
 const Device = require('../models/device.js');
+const Product = require('../models/device.js');
+
 const { bot } = require('../config/mongoose')
 
 
@@ -42,9 +44,22 @@ router.get('/allDevices', async function (req, res) {
     res.json({ devices })
 });
 
+router.get('/resetAll', async function (req, res) {
+    await Incident.deleteMany({})
+    await User.deleteMany({})
+    await Receiver.deleteMany({})
+    await Device.deleteMany({})
+    await Product.deleteMany({})
+    res.json({ success: true })
+});
 
 router.get('/resetUsers', async function (req, res) {
     let user = await User.deleteMany({})
+    res.json({ user })
+});
+
+router.get('/resetReceivers', async function (req, res) {
+    let user = await Receiver.deleteMany({})
     res.json({ user })
 });
 

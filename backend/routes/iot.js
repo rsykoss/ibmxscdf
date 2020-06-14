@@ -24,45 +24,73 @@ const storage = cloudinaryStorage({
     transformation: [{ width: 500, height: 500, crop: "limit" }]
 });
 
-// multer({ limits: { fieldSize: 25 * 1024 * 1024 } })
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, './public/storage');
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + '-' + file.originalname + ".png");
-//     }
-// });
-
 const parser = multer({ storage: storage, limits: { fieldSize: 25 * 1024 * 1024 } });
 
 const { bot } = require('../config/mongoose')
 
-const generateIncident = async ({ deviceKey, imageURL, severity, eventType, eventDescription }) => {
-    let key = deviceKey ? deviceKey : '5ee4bad674ca5538cfb3b4a7';
-    let device = await Device.findById(key)
+const generateIncident = async ({ deviceKey, imageURL, severity, eventType, eventDescription, location }) => {
+    let device = await Device.findById(deviceKey)
+    console.log(device)
     let newIncident = new Incident();
     newIncident.device = device;
-    newIncident.severity = 'Severe';
-    newIncident.eventDescription = 'An old woman shat herself.';
-    // newIncident.location = { longitude: device.location.longitude, latitude: device.location.latitude };
-    newIncident.imageURL = imageURL ? imageURL : device.imageURL
-    newIncident.eventType = eventType ? eventType : device.eventType
-    newIncident.save();
-    bot.sendMessage('42402078', newIncident.eventDescription, {
-        "reply_markup": {
-            "keyboard": [["I'm on it."], ["I don't care."]]
-        }
-    });
+    newIncident.severity = severity ? severity : 'Major';
+    newIncident.eventDescription = eventDescription ? eventDescription : 'A kitchen is burning!';
+    newIncident.imageURL = imageURL ? imageURL : ''
+    newIncident.eventType = eventType ? eventType : 'fire'
+    newIncident.careReceiver = device.careReceiver;
+
+    if (location) {
+        newIncident.location = location
+    }
+
+    await newIncident.save();
+
+    console.log(newIncident)
+
+    // let users = await User.find({
+    //     telegramState: 'Neutral',
+    //     locations: {
+    //         $elemMatch: {
+    //             latitude: {
+    //                 $gt: newIncident.latitude - 2 / 55,
+    //                 $lt: newIncident.latitude + 2 / 55
+    //             },
+    //             longitude: {
+    //                 $gt: newIncident.longitude - 2 / 55,
+    //                 $lt: newIncident.longitude + 2 / 55
+    //             }
+    //         }
+    //     }
+    // })
+    // users.forEach((u) => {
+    //     bot.sendMessage(u.telegramId, newIncident.eventDescription, {
+    //         "reply_markup": {
+    //             "keyboard": [["I'm on it."], ["I don't care."]]
+    //         }
+    //     });
+    // })
 }
 
-
-const uploads = multer({
-    storage: storage
-}).single('image');
-
 router.get('/report', async (req, res) => {
-    generateIncident({})
+    let receiver = await Receiver.findById('5ee588ef1b94356043a8c7d4')
+    let deviceKey
+    if (receiver.devices.length == 0) {
+        let product = await Product.findOne({}).lean()
+        let device = new Device();
+        device.deviceType = product.deviceType;
+        device.product = product
+        device.careReceiver = receiver;
+        await device.save();
+        receiver.devices.push(device);
+        receiver.save();
+        deviceKey = device._id
+    } else {
+        deviceKey = receiver.devices[0]
+    }
+
+    console.log('device key ' + deviceKey)
+
+    generateIncident({ deviceKey, imageURL: '', severity: '', eventType: '', eventDescription: '', location: '' })
     res.json({ success: true })
 })
 
@@ -70,25 +98,26 @@ router.post('/report', parser.any(), async function (req, res) {
     const { deviceKey,
         severity,
         eventType,
-        eventDescription
+        eventDescription,
+        location
     } = req.body;
-    console.log('test image');
-    const image = req.files.length > 0 ? req.files[0].secure_url : 'no image found';
-    console.log(image);
+    const image = req.files.length > 0 ? req.files[0].secure_url : '';
     generateIncident({
         deviceKey,
         eventDescription,
         imageURL: image,
         severity,
-        eventType
+        eventType,
+        location
     })
     res.json({ success: true })
 });
 
 router.get('/fetchAllDevices', async function (req, res) {
     const { id } = req.query;
-
-    let careReceiver = await Receiver.findById(id ? id : '5ee55bf1e51b411a29f81915').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
+    // localhost:3000
+    // localhost:3000?id=12345566
+    let careReceiver = await Receiver.findById(id ? id : '5ee588ef1b94356043a8c7d4').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
 
     res.json({
         success: true,
@@ -120,19 +149,30 @@ router.get('/fetchAllProducts', async function (req, res) {
 
 
 router.post('/registerDevice', async function (req, res) {
-    const { deviceType } = req.body;
+    const { deviceType, id } = req.body;
     console.log(deviceType);
+
+    let careReceiver = await Receiver.findById(id ? id : '5ee588ef1b94356043a8c7d4')
+
     let product = await Product.findOne({ deviceType }).lean()
+
     if (!product) {
         res.json({ success: false })
         return;
     }
+
     let device = new Device();
     device.deviceType = deviceType;
     device.product = product
+    device.careReceiver = careReceiver;
     device.save();
+
+    careReceiver.devices.push(device);
+    careReceiver.save();
+
     res.json({
-        success: true, newDevice: {
+        success: true,
+        newDevice: {
             type: device.deviceType,
             deviceKey: device._id,
             title: product.title,
@@ -143,15 +183,7 @@ router.post('/registerDevice', async function (req, res) {
 });
 
 router.post('/registerProduct', async function (req, res) {
-    // title: String,
-    // description: String,
-    // creatorURL: String,
-    // deviceType: {
-    //     type: String,
-    //     enum: ['cctv', 'walkingStick']
-    // },
     const { title, description, creatorURL, imageURL, deviceType } = req.body;
-    console.log({ title, description, creatorURL, deviceType });
     let product = new Product();
     product.title = title;
     product.description = description;

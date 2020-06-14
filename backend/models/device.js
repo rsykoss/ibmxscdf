@@ -9,6 +9,10 @@ var deviceSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product"
     },
+    careReceiver: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Receiver"
+    },
 });
 
 module.exports = mongoose.model("Device", deviceSchema);

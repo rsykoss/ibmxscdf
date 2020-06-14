@@ -13,9 +13,9 @@ var incidentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Device"
     },
-    user: {
+    careReceiver: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "Receiver"
     },
     severity: {
         type: String,
@@ -33,10 +33,19 @@ var incidentSchema = new mongoose.Schema({
         },
     },
     imageURL: String,
-    respondents: [{
+    responders: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    }]
+    }],
+    resolvedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    resolvedAt: Date,
+    cratedAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model("Incident", incidentSchema);

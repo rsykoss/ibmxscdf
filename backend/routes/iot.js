@@ -114,7 +114,7 @@ router.post('/report', parser.any(), async function (req, res) {
 });
 
 router.get('/fetchAllDevices', async function (req, res) {
-    const { id } = req.query;
+    const { id } = req.params;
     // localhost:3000
     // localhost:3000?id=12345566
     let careReceiver = await Receiver.findById(id ? id : '5ee588ef1b94356043a8c7d4').populate({ path: 'devices', model: 'Device', populate: { path: 'product', model: "Product" } })
@@ -127,7 +127,7 @@ router.get('/fetchAllDevices', async function (req, res) {
         address: 'Nanyang Technological',
         devices: careReceiver.devices.map(d => {
             return {
-                userid: userid,
+                id: id,
                 type: d.deviceType,
                 deviceKey: d._id,
                 title: d.product.title,

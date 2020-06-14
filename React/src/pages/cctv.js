@@ -19,7 +19,7 @@ const handlePrediction = (predictions) => {
         var severity, urlLink = ""
         if(key.includes("minor")){
           severity = 0
-          urlLink = getImageURL()
+          // urlLink = getImageURL()
         }else {
           severity = 1
           urlLink = getImageURL()

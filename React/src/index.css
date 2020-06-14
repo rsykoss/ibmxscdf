@@ -5,3 +5,22 @@
   right: 0;
   bottom: 0;
 }
+
+.bar {
+  padding: 20px;
+}
+
+.mr-auto {
+  font-size: large;
+}
+.brand {
+  font-size: large;
+}
+.login {
+  background-color:#343a40;
+  border-color: #343a40;
+}
+.login:hover {
+  background-color:#343a40;
+  border-color: #343a40;
+}

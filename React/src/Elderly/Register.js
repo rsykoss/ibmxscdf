@@ -32,32 +32,50 @@ class Register extends Component {
     }
 
     componentDidMount = () => {
+        let search = window.location.search;
+        var userid = search.split('=')
+        if (userid.length == 2){
+            userid = userid[1]
+        } else 
+            userid = '5ee55bf1e51b411a29f81915'
+        console.log(userid)
         axios({
             method: 'get',
             url: API_fetch,
-            data: {
-                deviceType: "cctv"
-            }
+            data: userid
         }).then((result) => {
             console.log(result);
             this.setState({
+                id: result.id,
                 name: result.data.name,
+                gender: result.data.gender,
+                age: result.data.age,
                 address: result.data.address,
                 devices: result.data.devices.length > 0 ? result.data.devices : []
             })
 
         });
     }
+    
 
 
     registerDevice = (e) => {
         e.preventDefault();
 
-        axios.post(API_register, { deviceType: "cctv" })
+        axios.post(API_register, { deviceType: "cctv", userid: this.state.id })
             .then((response) => {
-                console.log('teste');
+                
                 console.log(response)
-                this.setState({ devices: response.data.devices })
+                let arr = this.state.devices
+                if (arr === []){
+                    console.log('test');
+                    arr = response.data.newDevice
+                }
+                else {
+                    arr = arr.push(response.data.newDevice)
+
+                }
+                this.setState({ devices: [arr] })
             });
 
         return <div className="container">
@@ -69,13 +87,13 @@ class Register extends Component {
     renderMyDevices() {
         if (!this.state.devices) return <div />
         return this.state.devices.map(d => {
-            let imageURL = d.type == 'cctv' ? 'https://images.unsplash.com/photo-1565591452825-67d6b7df1d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' : 'https://images.unsplash.com/photo-1586001348188-05bd8063cb7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
-            return <div class="card" style={{ width: '18rem' }}>
-                <img src={imageURL} class="card-img-top" alt="..." />
-                <div class="card-body">
-                    <h5 class="card-title">{d.deviceKey}</h5>
-                    {/* <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                    <button class="btn btn-primary" onClick={() => gotoCCTV(d.deviceKey)}>{d.type}</button>
+            // let imageURL = d.type == 'cctv' ? 'https://images.unsplash.com/photo-1565591452825-67d6b7df1d47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60' : 'https://images.unsplash.com/photo-1586001348188-05bd8063cb7f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+            return <div className="card size">  
+                <img src={d.imageURL} className="card-img-top" alt="..." />
+                <div className="card-body">
+                    <h5 className="card-title">{d.title}</h5>
+                    <p className="card-text">{d.description}</p>
+                    <button className="btn btn-primary" onClick={() => gotoCCTV(d.deviceKey)}>{d.type}</button>
                 </div>
             </div>
             return <div> {d.imageURL} | {d.deviceKey}</div>
@@ -84,34 +102,35 @@ class Register extends Component {
 
     render() {
         return (
-            <div className="container col-10">
-                <div className="row row-2">
-                    <div className='col col-8'>
-                        <form className='form' onSubmit={this.registerDevice}>
-                            <label>
-                                Name:</label>
-                            <input type="text" name="name" value={this.state.name} onChange={this.onChange} />
+            <div className="bg">
+                <div className="outer">
+                    <div className='card side'>
+                        <form className='form' style={{ width: '100%'}} onSubmit={this.registerDevice}>
+                            <label className="space">Name:</label>
+                            <br />
+                            <input type="text" name="name" placeholder="John Tay" onChange={this.onChange} />
 
                             <br />
-                            <label>
-                                Address: </label>
-                            <input type="text" name="address" value={this.state.address} onChange={this.onChange} />
+                            <label className="space">Address: </label>
+                            <br />
+                            <input type="text" name="address" placeholder="NTU" onChange={this.onChange} />
 
                             <br />
-                            <label>
-                                Device Type: </label>
+                            <label className="space">Device Type: </label>
+                            <br />
                             <select className="dropdown" defaultValue={this.state.deviceType} onChange={this.onChange}>
                                 <option value="CCTV">CCTV</option>
                                 <option value="Sensor">Sensor</option>
                             </select>
 
-                            
+                            <div className="space"></div>
                             <button className="btn btn-primary" type="submit">Submit</button>
                         </form>
                     </div>
-                    <div className="container col-5">
-                        {this.renderMyDevices()}
-                    </div>
+                    
+                </div>
+                <div className="outer box">
+                    {this.renderMyDevices()}
                 </div>
             </div>
         );

@@ -6,9 +6,9 @@ import { Router, Switch, Route } from "react-router-dom";
  */
 // import App from './app';
 import CCTV from '../pages/cctv';
-import Home from '../pages/Home';
+// import Home from '../pages/Home';
 // import Profile from '../Elderly/Profile';
-// import Register from '../Elderly/Register';
+import Home from '../Elderly/Register';
 import history from './history';
 
 export default class Routes extends Component {

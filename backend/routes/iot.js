@@ -127,6 +127,7 @@ router.get('/fetchAllDevices', async function (req, res) {
         address: 'Nanyang Technological',
         devices: careReceiver.devices.map(d => {
             return {
+                userid: userid,
                 type: d.deviceType,
                 deviceKey: d._id,
                 title: d.product.title,

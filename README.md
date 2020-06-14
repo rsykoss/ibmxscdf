@@ -46,14 +46,14 @@ Our team chose to work on problem statement, A by automating the processes invol
 3. Watson Translation (optionally) can translate the text to the desired language.
 4. The app stores the translated text as a document within Object Storage.
 
-## Long description (not done yet)
+## Long description
 
 [More detail is available here](DESCRIPTION.md)
 
 ## Project roadmap
 ![image](https://user-images.githubusercontent.com/42865415/84589116-2c810300-ae5f-11ea-847b-5936e49469a1.png)
 
-## Getting started (doing)
+## Getting started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system. Live copy of this is up in section [Live demo](#live-demo)
 
 ### Prerequisites
@@ -100,8 +100,16 @@ Now the webapp should be running in `localhost:3000`.
 By opening up `http://localhost:3000` in browser, the IOT registration page is available. For demo purpose, we have placed a link to access webcam which will be acting like the cctv camera in this demo. 
 
 ## Live demo 
+You can find a running system to test below:
+[frontend]( https://zonghan.now.sh/)
+[backend](https://kampung-api.herokuapp.com/)
 
-You can find a running system to test at [kampung.herokuapp.com](https://kampung.herokuapp.com/).
+![image](https://user-images.githubusercontent.com/42865415/84589969-17a76e00-ae65-11ea-83bf-929b1b55e48d.png)
+![image](https://user-images.githubusercontent.com/42865415/84589978-2c840180-ae65-11ea-974b-dfefc46017d6.png)
+![image](https://user-images.githubusercontent.com/42865415/84589982-39085a00-ae65-11ea-9183-4a9872d769c6.png)
+![image](https://user-images.githubusercontent.com/42865415/84589999-4faeb100-ae65-11ea-818b-e431fa6b323d.png)
+
+
 
 ## Built with (done but need to verify)
 

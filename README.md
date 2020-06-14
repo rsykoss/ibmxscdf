@@ -1,6 +1,8 @@
 # Kampung App 
 A comprehensive IT solution to increase the efficiency of the current alert system for quicker response to incidents involving elderly. Our team name, Kampung App, was named with an ideal of involving the community or "Kampung" in local slang. The team comprises of Zong Han, Seoyoon, Xin Ping and Latrecia. We are all students who have a passion for using technology for the betterment of society.
 
+* [Landing Page](https://zonghan.now.sh/)
+* [The Life Saving API Call Documentation](https://zonghan.now.sh/doc)
 
 ## Contents
 

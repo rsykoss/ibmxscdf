@@ -115,23 +115,28 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
       usersString += '@' + r.name + ' '
     })
 
-    let idleUsers = await User.find({
-      _id: { $ne: user._id },
-      telegramState: 'Neutral',
-      locations: {
-        $elemMatch: {
-          latitude: {
-            $gt: newIncident.latitude - 2 / 55,
-            $lt: newIncident.latitude + 2 / 55
-          },
-          longitude: {
-            $gt: newIncident.longitude - 2 / 55,
-            $lt: newIncident.longitude + 2 / 55
+    let idleUsers = await User.aggregate([
+      {
+        $match: {
+          _id: { $ne: user._id },
+          telegramState: 'Neutral',
+          locations: {
+            $elemMatch: {
+              latitude: {
+                $gt: newIncident.latitude - 2 / 55,
+                $lt: newIncident.latitude + 2 / 55
+              },
+              longitude: {
+                $gt: newIncident.longitude - 2 / 55,
+                $lt: newIncident.longitude + 2 / 55
+              }
+            }
           }
         }
-      }
-    })
+      }]
+    )
 
+   
     idleUsers.forEach(u => {
       bot.sendMessage(u.telegramId, (incident.responders.length + 1) + " volunteers responding to Case " + incident._id);
     })
@@ -157,27 +162,31 @@ bot.onText(/\/resolve/, async (msg) => {
 
   if (user) {
 
-    let nearbyUsers = await User.find({
-      locations: {
-        $elemMatch: {
-          latitude: {
-            $gt: newIncident.latitude - 2 / 55,
-            $lt: newIncident.latitude + 2 / 55
-          },
-          longitude: {
-            $gt: newIncident.longitude - 2 / 55,
-            $lt: newIncident.longitude + 2 / 55
+    let nearbyUsers = await User.aggregate([
+      {
+        $match: {
+          locations: {
+            $elemMatch: {
+              latitude: {
+                $gt: newIncident.latitude - 2 / 55,
+                $lt: newIncident.latitude + 2 / 55
+              },
+              longitude: {
+                $gt: newIncident.longitude - 2 / 55,
+                $lt: newIncident.longitude + 2 / 55
+              }
+            }
           }
         }
-      }
-    })
+      }]
+    )
 
     nearbyUsers.forEach(u => {
       bot.sendMessage(u.telegramId, 'Case #' + user.incident + ' has been resolved.');
     })
 
     let incidentId = String(user.incident);
-    
+
     User.updateMany({ incident: incidentId }, {
       incident: null,
       telegramState: 'Neutral',

@@ -45,36 +45,40 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType, even
 
     await newIncident.save();
 
-    console.log(newIncident)
+    let users = await User.aggregate([
+        {
+            $match: {
+                telegramState: 'Neutral',
+                locations: {
+                    $elemMatch: {
+                        latitude: {
+                            $gt: newIncident.location.latitude - 1000 / 55,
+                            $lt: newIncident.location.latitude + 1000 / 55
+                        },
+                        longitude: {
+                            $gt: newIncident.location.longitude - 1000 / 55,
+                            $lt: newIncident.location.longitude + 1000 / 55
+                        }
+                    }
+                }
+            }
+        }]
+    )
 
-    // let users = await User.find({
-    //     telegramState: 'Neutral',
-    //     locations: {
-    //         $elemMatch: {
-    //             latitude: {
-    //                 $gt: newIncident.latitude - 2 / 55,
-    //                 $lt: newIncident.latitude + 2 / 55
-    //             },
-    //             longitude: {
-    //                 $gt: newIncident.longitude - 2 / 55,
-    //                 $lt: newIncident.longitude + 2 / 55
-    //             }
-    //         }
-    //     }
-    // })
-    // users.forEach((u) => {
-    //     bot.sendMessage(u.telegramId, newIncident.eventDescription, {
-    //         "reply_markup": {
-    //             "keyboard": [["I'm on it."], ["I don't care."]]
-    //         }
-    //     });
-    // })
+
+    users.forEach((u) => {
+        bot.sendMessage(u.telegramId, newIncident.eventDescription, {
+            "reply_markup": {
+                "keyboard": [["I'm on it."], ["I don't care."]]
+            }
+        });
+    })
 }
 
 router.get('/report', async (req, res) => {
     let receiver = await Receiver.findById('5ee588ef1b94356043a8c7d4')
     let deviceKey
-    if (receiver.devices.length == 0) {
+    if (true) {
         let product = await Product.findOne({}).lean()
         let device = new Device();
         device.deviceType = product.deviceType;

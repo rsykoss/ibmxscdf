@@ -5,7 +5,7 @@ import CCTV from '../cctv'
 import face from './img/face_1.jpg'
 
 //const API_register = 'http://localhost:3001/iot/registerDevice';
-const API_fetch = 'http://localhost:3001/iot/fetchAllDevices';
+const API_fetch = 'https://kampung-api.herokuapp.com/iot/fetchAllDevices';
 
 class Profile extends Component {
     

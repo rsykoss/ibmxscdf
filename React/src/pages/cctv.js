@@ -87,7 +87,7 @@ function sendReq(image, severity) {
   bodyFormData.set('eventType', accident);
   axios({
     method: 'post',
-    url: 'http://localhost:3001/iot/report',
+    url: 'https://kampung-api.herokuapp.com/iot/report',
     data: bodyFormData,
     headers: {'Content-Type': 'multipart/form-data', "Accept": "application/json", "type": "formData" }
     })

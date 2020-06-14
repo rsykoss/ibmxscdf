@@ -4,8 +4,8 @@ import './register.css'
 import { Link } from 'react-router-dom';
 // import Profile from './Profile'
 
-const API_register = 'http://localhost:3001/iot/registerDevice'
-const API_fetch = 'http://localhost:3001/iot/fetchAllDevices'
+const API_register = 'https://kampung-api.herokuapp.com/iot/registerDevice'
+const API_fetch = 'https://kampung-api.herokuapp.com/iot/fetchAllDevices'
 
 
 class Register extends Component {
@@ -126,6 +126,6 @@ class Register extends Component {
 
 }
 function gotoCCTV(key) {
-    window.location.href = "http://localhost:3000/cctv?productKey="+key;
+    window.location.href = "https://kampung-api.herokuapp.com/cctv?productKey="+key;
 }
 export default Register;

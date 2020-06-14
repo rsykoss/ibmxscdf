@@ -9,6 +9,16 @@ const Product = require('../models/device.js');
 const { bot } = require('../config/mongoose')
 
 
+router.get('/', async function (req, res) {
+    bot.sendMessage('42402078', 'test', {
+        "reply_markup": {
+            "keyboard": [["I'm on it."], ["I don't care."]]
+        }
+    });
+    res.json({ success: true })
+});
+
+
 router.get('/simulateReport', async function (req, res) {
     bot.sendMessage('42402078', 'test', {
         "reply_markup": {

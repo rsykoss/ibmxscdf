@@ -3,7 +3,11 @@ var mongoose = require("mongoose");
 var incidentSchema = new mongoose.Schema({
     eventType: {
         type: String,
-        enum: ['fire', 'accident']
+        enum: ['Fire', 'Accident', 'Health']
+    },
+    severity: {
+        type: String,
+        enum: ['Minor', 'Major']
     },
     deviceType: {
         type: String,
@@ -16,10 +20,6 @@ var incidentSchema = new mongoose.Schema({
     careReceiver: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Receiver"
-    },
-    severity: {
-        type: String,
-        enum: ['Minor', 'Major']
     },
     eventDescription: String,
     location: {

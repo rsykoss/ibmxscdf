@@ -52,12 +52,12 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType, even
                 locations: {
                     $elemMatch: {
                         latitude: {
-                            $gt: newIncident.location.latitude - 1000 / 55,
-                            $lt: newIncident.location.latitude + 1000 / 55
+                            $gt: newIncident.location.latitude - 2 / 55,
+                            $lt: newIncident.location.latitude + 2 / 55
                         },
                         longitude: {
-                            $gt: newIncident.location.longitude - 1000 / 55,
-                            $lt: newIncident.location.longitude + 1000 / 55
+                            $gt: newIncident.location.longitude - 2 / 55,
+                            $lt: newIncident.location.longitude + 2 / 55
                         }
                     }
                 }
@@ -65,13 +65,13 @@ const generateIncident = async ({ deviceKey, imageURL, severity, eventType, even
         }]
     )
 
-
     users.forEach((u) => {
-        bot.sendMessage(u.telegramId, newIncident.eventDescription, {
+        bot.sendMessage(u.telegramId, "#" + newIncident._id + ": " + newIncident.eventDescription, {
             "reply_markup": {
-                "keyboard": [["I'm on it."], ["I don't care."]]
+                "keyboard": [["/help " + newIncident._id], ["I don't care."]]
             }
         });
+        bot.sendLocation(u.telegramId, newIncident.location.latitude, newIncident.location.longitude);
     })
 }
 

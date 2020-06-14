@@ -67,7 +67,7 @@ bot.on('message', async (msg) => {
       if (msg.chat.username) placeholderUser.name = msg.chat.username;
       await placeholderUser.save();
       await bot.sendMessage(chatId, 'Hello, ' + msg.chat.username + '. Your account has been tagged to NRIC ' + placeholderUser.nric);
-      bot.sendMessage(chatId, 'Send a location where you would like to receive help requests for.');
+      bot.sendMessage(chatId, 'Send a location where you would like to receive help notifications for.');
     } else {
       console.log('placeholder user not found')
       bot.sendMessage(chatId, 'Invalid account key');
@@ -87,10 +87,6 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
   const resp = match[1]; // the captured "whatever"
   console.log(resp)
 
-  let user = await User.findOne({ telegramId: String(chatId) }).exec();
-  bot.sendMessage(chatId, 'Go help granny with @' + user.name + '!');
-
-
   let incident = await Incident.findById(resp).populate('responders').lean();
   if (!incident) {
     bot.sendLocation(chatId, 1.4384, 103.8025);
@@ -106,13 +102,21 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
       {
         returnNewDocument: true
       }, function (error, profile) {
-        res.json({ msg: 'Success' })
       });
 
-    await bot.sendLocation(chatId, incident.latitude, incident.longitude);
+    // await bot.sendLocation(chatId, incident.location.latitude, incident.location.longitude);
+
+    bot.sendMessage(chatId, "#" + incident._id + ": " + "Remember to /resolve after reaching the destination and when no further help from other volunteers is needed. In case of emergency, call 995.", {
+      "reply_markup": {
+        "keyboard": [["/resolve"]]
+      }
+    });
+
     let usersString = ''
     incident.responders.map(r => {
-      usersString += '@' + r.name + ' '
+      if (r.name != user.name) {
+        usersString += '@' + r.name + ' '
+      }
     })
 
     let idleUsers = await User.aggregate([
@@ -123,12 +127,12 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
           locations: {
             $elemMatch: {
               latitude: {
-                $gt: newIncident.latitude - 2 / 55,
-                $lt: newIncident.latitude + 2 / 55
+                $gt: incident.location.latitude - 2 / 55,
+                $lt: incident.location.latitude + 2 / 55
               },
               longitude: {
-                $gt: newIncident.longitude - 2 / 55,
-                $lt: newIncident.longitude + 2 / 55
+                $gt: incident.location.longitude - 2 / 55,
+                $lt: incident.location.longitude + 2 / 55
               }
             }
           }
@@ -136,9 +140,9 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
       }]
     )
 
-   
+
     idleUsers.forEach(u => {
-      bot.sendMessage(u.telegramId, (incident.responders.length + 1) + " volunteers responding to Case " + incident._id);
+      bot.sendMessage("#" + incident._id + ': ' + u.telegramId, (incident.responders.length + 1) + " volunteers responding to Case " + incident._id);
     })
 
     let searchingUsers = await User.find({
@@ -147,39 +151,44 @@ bot.onText(/\/help (.+)/, async (msg, match) => {
     })
 
     searchingUsers.forEach(u => {
-      bot.sendMessage(u.telegramId, "@" + user.name + " has joined you in responding to Case " + incident._id);
+      bot.sendMessage("#" + incident._id + ': ' + u.telegramId, "@" + user.name + " has joined you in responding to Case " + incident._id);
     })
-
-    bot.sendMessage(chatId, 'Go help granny with ' + usersString + '!');
+    if (usersString != '') {
+      bot.sendMessage(chatId, "#" + incident._id + ': ' + 'Go help granny with ' + usersString + '!');
+    }
   }
   // send back the matched "whatever" to the chat
 });
 
 bot.onText(/\/resolve/, async (msg) => {
   const chatId = msg.chat.id;
+  console.log('hellooo')
+
   let user = await User.findOne({ telegramId: String(chatId) }).exec();
   console.log('pint')
 
   if (user) {
-
+    let incident = await Incident.findById(user.incident);
     let nearbyUsers = await User.aggregate([
       {
         $match: {
           locations: {
             $elemMatch: {
               latitude: {
-                $gt: newIncident.latitude - 2 / 55,
-                $lt: newIncident.latitude + 2 / 55
+                $gt: incident.location.latitude - 2 / 55,
+                $lt: incident.location.latitude + 2 / 55
               },
               longitude: {
-                $gt: newIncident.longitude - 2 / 55,
-                $lt: newIncident.longitude + 2 / 55
+                $gt: incident.location.longitude - 2 / 55,
+                $lt: incident.location.longitude + 2 / 55
               }
             }
           }
         }
       }]
     )
+
+    console.log(nearbyUsers);
 
     nearbyUsers.forEach(u => {
       bot.sendMessage(u.telegramId, 'Case #' + user.incident + ' has been resolved.');
@@ -198,7 +207,6 @@ bot.onText(/\/resolve/, async (msg) => {
     }, {
       returnNewDocument: true
     }, function (error, profile) {
-      res.json({ msg: 'Success' })
     });
 
   }

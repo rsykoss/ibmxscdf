@@ -8,7 +8,7 @@ const token = '1227957179:AAH2LlBismPtuI0lC0KYVD5XhrhMAqq1VFY';
 const token2 = '1161091303:AAH8-2bXl6LIN5aDXHUSAHOs7oGJ4Q_G6OY'
 
 let prod = true;
-// prod = false;
+prod = false;
 
 const bot = new TelegramBot(prod ? token2 : token, { polling: true });
 
